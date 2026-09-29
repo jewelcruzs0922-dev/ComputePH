@@ -70,7 +70,7 @@ describe("NEXT_PUBLIC_SITE_URL handling", () => {
   it("falls back to the documented default outside dev, with a warning", async () => {
     vi.spyOn(console, "warn").mockImplementation(() => {});
     const mod = await loadSiteUrl();
-    expect(mod.SITE_URL).toBe("https://computeph.ph");
+    expect(mod.SITE_URL).toBe("https://computeph.vercel.app");
     expect(console.warn).toHaveBeenCalledWith(
       expect.stringContaining("NEXT_PUBLIC_SITE_URL is not set"),
     );

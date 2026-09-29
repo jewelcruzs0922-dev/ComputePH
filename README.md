@@ -55,7 +55,7 @@ and JSON-LD comes from a single environment variable (resolved in
 `lib/site.ts`):
 
 ```
-NEXT_PUBLIC_SITE_URL=https://your-domain.com
+NEXT_PUBLIC_SITE_URL=https://computeph.vercel.app
 ```
 
 - **Required on Vercel deployments (Production, Preview, and Development)**

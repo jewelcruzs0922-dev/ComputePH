@@ -17,7 +17,7 @@ export const SITE_NAME = "ComputePH";
  *   default origin below and print a warning, so `npm run build` still
  *   works offline; real deployments must set the variable.
  */
-const DOCUMENTED_DEFAULT_ORIGIN = "https://computeph.ph";
+const DOCUMENTED_DEFAULT_ORIGIN = "https://computeph.vercel.app";
 
 /** Validates and normalizes a site URL. Throws with a clear message when invalid. */
 export function normalizeSiteUrl(raw: string): string {
