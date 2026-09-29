@@ -1,7 +1,9 @@
-?# ComputePH
+# ComputePH
 
 Free Filipino-focused calculators for salary, government contributions, and money
 decisions. Simple calculators for everyday life in the Philippines.
+
+Source: https://github.com/jewelcruzs0922-dev/ComputePH
 
 ## Stack
 
