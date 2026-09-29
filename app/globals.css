@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo,
+    Consolas, monospace;
+}
+
+/*
+ * ComputePH design tokens — blue, yellow, white only.
+ * Palette: #1098d3 / #51d7e7 blues, #fbe48e / #f5e5a1 yellows.
+ * Change --color-navy / --color-royal / --color-brand to re-brand the site.
+ */
+@theme {
+  /* Blue — structure, headings, navigation, links, footer */
+  --color-navy: #122a5f;
+  --color-navy-deep: #0b4a72;
+  --color-navy-soft: #0d76ac;
+  --color-royal: #1098d3;
+  --color-royal-strong: #0b76ab;
+  --color-royal-soft: #e4f7fd;
+
+  /* Yellow — primary actions, result highlights, featured states */
+  --color-brand: #fbe48e;
+  --color-brand-strong: #f2d467;
+  --color-brand-soft: #fdf9e9;
+
+  /* White / subtle cyan-washed surfaces */
+  --color-mist: #eff9fd;
+  --color-azure: #e3f6fd;
+  --color-butter: #faf1c7;
+
+  /* Text and borders */
+  --color-ink: #1b2a44;
+  --color-ink-muted: #5b6b85;
+  --color-line: #d9e7f2;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  /* Sticky header sits below the viewport top. */
+  scroll-padding-top: 5.5rem;
+  /* One knob: every text size on the site is rem-based, so this scales all
+     type (and Tailwind spacing) together. 16px = browser default. */
+  font-size: 18px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  background: #ffffff;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-royal);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+::selection {
+  background: var(--color-brand);
+  color: var(--color-ink);
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* The search field has its own arrow button on the right. */
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
