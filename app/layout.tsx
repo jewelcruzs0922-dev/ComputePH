@@ -53,6 +53,7 @@ export const metadata: Metadata = {
     images: ["/images/hero-skyline.jpg"],
   },
   robots: { index: true, follow: true },
+  verification: { google: "IJj3k3BmDseRHrSDxMTr0VBzy2tmKhcT-p1m3J44Q1A" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
