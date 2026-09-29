@@ -201,7 +201,7 @@ function SegmentedInput({
               onChange={() => onChange(opt.value)}
               className="peer sr-only"
             />
-            <span className="inline-flex min-h-11 cursor-pointer items-center rounded-lg border border-line bg-white px-4 py-2.5 text-sm font-medium text-ink-muted transition-colors hover:border-royal/40 hover:text-navy peer-checked:border-royal peer-checked:bg-royal peer-checked:text-white peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-royal">
+            <span className="inline-flex min-h-11 cursor-pointer items-center rounded-lg border border-line bg-white px-4 py-2.5 text-sm font-medium text-ink-muted transition-colors hover:border-royal/40 hover:text-navy peer-checked:border-royal-strong peer-checked:bg-royal-strong peer-checked:text-white peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-royal">
               {opt.label}
             </span>
           </label>
