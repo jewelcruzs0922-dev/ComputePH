@@ -32,8 +32,20 @@ describe("security headers", () => {
     expect(csp).toContain("font-src 'self'");
     // Test runs without NODE_ENV=development: production must never allow eval.
     expect(csp).not.toContain("unsafe-eval");
-    // No third-party origins: the app loads nothing external.
-    expect(csp).not.toMatch(/https?:\/\//);
+    // The only external origins allowed are Microsoft Clarity's; any other
+    // third-party origin in the CSP fails this test.
+    const clarityOrigins = new Set([
+      "https://www.clarity.ms",
+      "https://scripts.clarity.ms",
+      "https://*.clarity.ms",
+      "https://c.bing.com",
+    ]);
+    for (const origin of csp.match(/https?:\/\/[^\s;]+/g) ?? []) {
+      expect(clarityOrigins.has(origin), `unexpected CSP origin: ${origin}`).toBe(
+        true,
+      );
+    }
+    expect(csp).toContain("https://www.clarity.ms");
   });
 
   it("sets the standard hardening headers", async () => {

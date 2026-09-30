@@ -3,7 +3,7 @@
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
-    "ComputePH privacy policy: no accounts, no tracking, calculations run in your browser, and your financial inputs are never stored.",
+    "ComputePH privacy policy: no accounts, calculations run in your browser, and your financial inputs are never stored.",
   alternates: { canonical: "/privacy" },
 };
 
@@ -29,12 +29,31 @@ export default function PrivacyPage() {
         </p>
 
         <h2 className="pt-2 text-xl font-semibold text-navy">
-          No accounts, no tracking
+          No accounts
         </h2>
         <p>
-          ComputePH has no user accounts and does not use analytics, cookies,
-          advertising trackers, or third-party scripts to follow you across the
-          web.
+          ComputePH has no user accounts, no advertising trackers, and no
+          scripts that follow you across other websites.
+        </p>
+
+        <h2 className="pt-2 text-xl font-semibold text-navy">Analytics</h2>
+        <p>
+          To understand how the site is used, ComputePH uses two analytics
+          tools: Vercel Web Analytics and Microsoft Clarity. They collect
+          basic usage data such as which pages are visited, approximate
+          country, device type (mobile or desktop), referring site, and
+          interactions on the page such as clicks and scrolls. Microsoft
+          Clarity can also record visits so that we can replay them to find
+          confusing or broken parts of the site, and it may set a first-party
+          cookie to keep a session together.
+        </p>
+        <p>
+          The amounts, salaries, and other values you type into the
+          calculators are processed in your browser as described above, and
+          Microsoft Clarity masks everything entered into input fields before
+          any data is sent to its servers, so your entries do not appear in
+          session recordings. Neither tool is used to identify you personally
+          or to show you advertisements.
         </p>
 
         <h2 className="pt-2 text-xl font-semibold text-navy">

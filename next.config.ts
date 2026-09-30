@@ -7,15 +7,18 @@ const isDev = process.env.NODE_ENV === "development";
 //   'unsafe-inline' (a nonce CSP would force every SSG page to dynamic rendering).
 // - React inline style attributes (clip-path etc.) require style-src 'unsafe-inline'.
 // - Fonts: next/font Geist (self-hosted). Images: local /public + /_next/image only.
-// - No external scripts, APIs, analytics, embeds, or fonts.
+// - Vercel Web Analytics loads first-party (/_vercel/...); Microsoft Clarity is the
+//   only third-party script (www.clarity.ms tag loader; stats POSTed to
+//   www.clarity.ms / *.clarity.ms; beacons from c.clarity.ms / c.bing.com; heatmap
+//   fonts as data: URLs — see https://learn.microsoft.com/clarity/setup-and-installation/clarity-csp).
 // - 'unsafe-eval' only in development (React debugging); production stays strict.
 const contentSecurityPolicy = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
+  `script-src 'self' 'unsafe-inline' https://www.clarity.ms https://scripts.clarity.ms https://*.clarity.ms${isDev ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' blob: data:",
-  "font-src 'self'",
-  "connect-src 'self'",
+  "img-src 'self' blob: data: https://*.clarity.ms https://c.bing.com",
+  "font-src 'self' data:",
+  "connect-src 'self' https://www.clarity.ms https://*.clarity.ms https://c.bing.com",
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",

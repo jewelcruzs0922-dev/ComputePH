@@ -158,7 +158,7 @@ export default async function CalculatorPage({ params }: Props) {
         ]}
       />
 
-      <header className="mt-5 xl:grid xl:grid-cols-[minmax(0,1fr)_auto] xl:items-start xl:gap-10">
+      <header className="mt-5 xl:grid xl:grid-cols-[max-content_auto] xl:justify-start xl:items-start xl:gap-16">
         <div className="max-w-3xl">
           <Link
             href={`/calculators/#${category.anchor}`}
@@ -186,7 +186,7 @@ export default async function CalculatorPage({ params }: Props) {
           width={art.w}
           height={art.h}
           sizes="(min-width: 1536px) 360px, 300px"
-          className="mt-1 hidden h-auto w-[300px] select-none xl:block 2xl:w-[360px]"
+          className="mt-1 hidden h-auto w-[420px] select-none xl:block 2xl:w-[520px]"
         />
       </header>
 
