@@ -5,7 +5,6 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { CATEGORIES } from "@/lib/registry";
-import { SearchIcon } from "@/components/home/homeIcons";
 
 const PRIMARY_LINKS = [
   { href: "/calculators", label: "Calculators" },
@@ -99,13 +98,6 @@ export default function SiteHeader() {
         </nav>
 
         <div className="ml-auto flex items-center gap-1">
-          <Link
-            href="/calculators"
-            aria-label="Search calculators"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-md text-navy transition-colors hover:bg-mist focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-royal"
-          >
-            <SearchIcon className="h-5 w-5" />
-          </Link>
           <button
             type="button"
             className="inline-flex h-11 w-11 items-center justify-center rounded-md text-navy transition-colors hover:bg-mist md:hidden"
