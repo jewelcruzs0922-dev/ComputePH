@@ -3,14 +3,16 @@
 Free Filipino-focused calculators for salary, government contributions, and money
 decisions. Simple calculators for everyday life in the Philippines.
 
+**Live:** https://computeph.vercel.app
+
 Source: https://github.com/jewelcruzs0922-dev/ComputePH
 
 ## Stack
 
-- Next.js 16 (App Router, Turbopack, fully static output)
+- Next.js 16 (App Router, Turbopack, every page prerendered at build)
 - React 19 + TypeScript (strict)
 - Tailwind CSS v4
-- Vitest for unit tests
+- Vitest for unit tests (274 tests)
 
 ## Commands
 
