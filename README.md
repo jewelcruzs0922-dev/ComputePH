@@ -5,6 +5,8 @@ decisions. Simple calculators for everyday life in the Philippines.
 
 **Live:** https://computeph.vercel.app
 
+![The home page](docs/home.jpg)
+
 Source: https://github.com/jewelcruzs0922-dev/ComputePH
 
 ## Stack
