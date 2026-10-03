@@ -9,6 +9,18 @@ decisions. Simple calculators for everyday life in the Philippines.
 
 Source: https://github.com/jewelcruzs0922-dev/ComputePH
 
+## A look around
+
+These are screenshots of the running site, not mockups.
+
+| Calculator index | 13th month pay |
+| --- | --- |
+| ![All calculators listed on one page](docs/calculators.jpg) | ![The 13th month pay calculator](docs/calculator-13th.jpg) |
+| <sub><b>Calculators</b> — every tool in one index</sub> | <sub><b>13th month pay</b> — basic salary and months worked, prorated</sub> |
+| Overtime pay | About |
+| ![The overtime pay calculator](docs/calculator-overtime.jpg) | ![The about page](docs/about.jpg) |
+| <sub><b>Overtime</b> — rate, day type, and hours in, overtime owed out</sub> | <sub><b>About</b> — project background</sub> |
+
 ## Stack
 
 - Next.js 16 (App Router, Turbopack, every page prerendered at build)
