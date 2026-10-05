@@ -1,9 +1,10 @@
-"use client";
+﻿"use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { searchCalculators } from "@/lib/search";
 import { CATEGORIES, type CategoryId } from "@/lib/registry";
+import { trackEvent } from "@/lib/analytics";
 import CalculatorCard from "@/components/ui/CalculatorCard";
 import SearchField from "@/components/ui/SearchField";
 import { CARD_ICONS } from "@/components/calculators/cardIcons";
@@ -26,6 +27,10 @@ export type IndexItem = {
 type IconComp = React.ComponentType<{ className?: string }>;
 
 const SUGGESTIONS = ["13th month", "SSS", "overtime", "loan", "discount"];
+
+const PLACEHOLDER_LONG =
+  "Search calculators… (e.g. 13th month, SSS, loan)";
+const PLACEHOLDER_SHORT = "Search calculators...";
 
 const CATEGORY_UI: Record<
   CategoryId,
@@ -56,6 +61,18 @@ const CATEGORY_UI: Record<
 export default function CalculatorIndex({ items }: { items: IndexItem[] }) {
   const [query, setQuery] = useState("");
   const [only, setOnly] = useState<CategoryId | null>(null);
+  // Concise placeholder on narrow screens; the longer example stays on
+  // desktop. Starts short so server HTML and the first client render match.
+  const [placeholder, setPlaceholder] = useState(PLACEHOLDER_SHORT);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 640px)");
+    const apply = () =>
+      setPlaceholder(mq.matches ? PLACEHOLDER_LONG : PLACEHOLDER_SHORT);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
 
   const results = useMemo(() => {
     const q = query.trim();
@@ -69,6 +86,15 @@ export default function CalculatorIndex({ items }: { items: IndexItem[] }) {
     }));
   }, [query]);
 
+  // Fire `search_used` once per mount on the first non-empty query.
+  const searchTracked = useRef(false);
+  useEffect(() => {
+    if (results !== null && !searchTracked.current) {
+      searchTracked.current = true;
+      trackEvent("search_used");
+    }
+  }, [results]);
+
   const grouped = CATEGORIES.map((cat) => ({
     cat,
     list: items.filter((i) => i.category === cat.id),
@@ -76,6 +102,12 @@ export default function CalculatorIndex({ items }: { items: IndexItem[] }) {
 
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView();
+  };
+
+  /** Applies a fixed suggestion term (never user-typed text). */
+  const applySuggestion = (s: string) => {
+    setQuery(s);
+    trackEvent("popular_clicked", { term: s });
   };
 
   const go = () => scrollTo(results ? "results-heading" : "browse");
@@ -88,13 +120,14 @@ export default function CalculatorIndex({ items }: { items: IndexItem[] }) {
       scrollTo("browse");
     } else {
       setOnly(id);
+      trackEvent("category_selected", { category: id });
       const anchor = CATEGORIES.find((c) => c.id === id)?.anchor;
       if (anchor) requestAnimationFrame(() => scrollTo(anchor));
     }
   };
 
   const chipCls =
-    "rounded-full border border-line bg-white px-4 py-1.5 text-base font-medium text-navy transition-colors hover:border-royal hover:text-royal-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-royal";
+    "rounded-full border border-line bg-white px-4 py-2 text-base font-medium text-navy transition-colors hover:border-royal hover:text-royal-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-royal sm:py-1.5";
 
   const visible = only ? grouped.filter((g) => g.cat.id === only) : grouped;
 
@@ -106,19 +139,21 @@ export default function CalculatorIndex({ items }: { items: IndexItem[] }) {
             id="index-search"
             value={query}
             onChange={setQuery}
-            placeholder="Search calculators… (e.g. 13th month, SSS, loan)"
+            placeholder={placeholder}
             onGo={go}
           />
         </div>
       </div>
 
-      <div className="mt-3 flex flex-wrap items-center gap-2 xl:pl-10">
-        <span className="mr-1 text-base text-ink-muted">Popular:</span>
+      <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-2.5 xl:pl-10">
+        <span className="mr-1 shrink-0 text-base text-ink-muted">
+          Popular:
+        </span>
         {SUGGESTIONS.map((s) => (
           <button
             key={s}
             type="button"
-            onClick={() => setQuery(s)}
+            onClick={() => applySuggestion(s)}
             className={chipCls}
           >
             {s}
@@ -152,7 +187,7 @@ export default function CalculatorIndex({ items }: { items: IndexItem[] }) {
                   <button
                     key={s}
                     type="button"
-                    onClick={() => setQuery(s)}
+                    onClick={() => applySuggestion(s)}
                     className={chipCls}
                   >
                     {s}
@@ -227,7 +262,7 @@ export default function CalculatorIndex({ items }: { items: IndexItem[] }) {
                       width={ui.art.w}
                       height={ui.art.h}
                       sizes="320px"
-                      className="mt-6 h-auto w-full max-w-[300px] select-none"
+                      className="mt-6 hidden h-auto w-full max-w-[300px] select-none lg:block"
                     />
                   </div>
                   <ul className="grid gap-4 sm:grid-cols-2">

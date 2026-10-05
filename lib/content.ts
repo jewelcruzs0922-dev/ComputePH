@@ -49,7 +49,7 @@ export const CONTENT: Record<string, CalculatorContent> = {
     notes: [
       "This calculator assumes the same basic monthly salary throughout the period. If your salary changed during the year, enter your average — total basic salary earned for the year ÷ months worked — for a more accurate estimate.",
       "Entitled: all rank-and-file employees in the private sector who worked at least one month during the calendar year, regardless of position or employment status.",
-      "Payment is due on or before December 24. Employers may pay half before the regular school year opens and the half on or before December 24.",
+      "Payment is due on or before December 24. Employers may pay half before the regular school year opens and the remaining half on or before December 24.",
       "13th month pay and other benefits are exempt from income tax up to ₱90,000 per year. Larger amounts are added to your taxable income.",
       "Public-sector (government) employees are covered by a different pay system and are not covered by this rule.",
       "No request or application for exemption from payment of 13th month pay, or for deferment of its payment, is accepted or allowed (DOLE Labor Advisory No. 16-2025).",
@@ -178,7 +178,7 @@ export const CONTENT: Record<string, CalculatorContent> = {
       },
       {
         q: "Is night differential mandatory?",
-        a: "Yes — Article 86 of the Labor Code requires it for all covered employees, with limited exceptions such as certain managerial positions and where a valid alternative arrangement exists.",
+        a: "Yes — Article 86 of the Labor Code requires night shift differential for covered employees. The recognized exceptions are government employees; retail or service establishments regularly employing not more than five workers; domestic or personal-service staff; managerial employees; and field personnel.",
       },
       {
         q: "Does night differential count as overtime?",
@@ -416,7 +416,7 @@ export const CONTENT: Record<string, CalculatorContent> = {
       },
       {
         q: "Do part-time or kasambahay employees contribute?",
-        a: "Yes, with special rules — household workers earning ₱1,500 or below pay 1% while the employer still pays 2%.",
+        a: "Yes. For kasambahays (household workers) under HDMF Circular No. 460, the mandatory monthly savings is shouldered entirely by the employer while the fund salary is below ₱5,000 — 3% if the fund salary is ₱1,500 or below, and 4% if it is above ₱1,500 but below ₱5,000. At ₱5,000 or above, the usual employee and employer sharing applies. This calculator follows the standard employee mandatory savings and does not compute kasambahay savings separately.",
       },
     ],
   },

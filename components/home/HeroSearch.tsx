@@ -53,7 +53,7 @@ export default function HeroSearch() {
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={onKeyDown}
           aria-describedby="hero-search-hint"
-          className="h-12 w-full rounded-full border border-line bg-white pl-11 pr-12 text-[0.9375rem] xl:h-14 xl:pr-16 xl:text-base shadow-[0_2px_10px_rgba(15,61,115,0.06)] placeholder:text-[0.8125rem] placeholder:text-ink-muted/70 focus:border-royal focus:outline-2 focus:outline-offset-2 focus:outline-royal"
+          className="h-12 w-full rounded-full border border-line bg-white pl-11 pr-12 text-[0.9375rem] xl:h-14 xl:pr-16 xl:text-base shadow-[0_2px_10px_rgba(15,61,115,0.06)] placeholder:text-[0.8125rem] placeholder:text-ink-muted focus:border-royal focus:outline-2 focus:outline-offset-2 focus:outline-royal"
         />
         <button
           type="button"

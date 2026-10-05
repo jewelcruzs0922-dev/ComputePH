@@ -142,7 +142,7 @@ export default async function CalculatorPage({ params }: Props) {
   };
 
   return (
-    <Container className="py-10 sm:py-14">
+    <Container className="pt-5 pb-10 sm:py-14">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -158,7 +158,7 @@ export default async function CalculatorPage({ params }: Props) {
         ]}
       />
 
-      <header className="mt-5 xl:grid xl:grid-cols-[max-content_auto] xl:justify-start xl:items-start xl:gap-16">
+      <header className="mt-3 sm:mt-5 xl:grid xl:grid-cols-[max-content_auto] xl:justify-start xl:items-start xl:gap-16">
         <div className="max-w-3xl">
           <Link
             href={`/calculators/#${category.anchor}`}
@@ -167,17 +167,27 @@ export default async function CalculatorPage({ params }: Props) {
             <CatIcon className="h-4 w-4" />
             {category.name}
           </Link>
-          <h1 className="mt-3 text-3xl font-bold leading-tight tracking-tight text-navy sm:text-4xl">
+          <h1 className="mt-2.5 text-2xl font-bold leading-[1.2] tracking-tight text-navy sm:mt-3 sm:text-4xl sm:leading-tight">
             {meta.title}
           </h1>
           {content.intro.map((paragraph, i) => (
             <p
               key={paragraph}
-              className={`max-w-2xl text-base leading-7 text-ink-muted${i === 0 ? " mt-3" : " mt-2"}`}
+              className={`max-w-2xl text-base leading-6 text-ink-muted sm:leading-7${i === 0 ? " mt-2.5 sm:mt-3" : " mt-2"}`}
             >
               {paragraph}
             </p>
           ))}
+          {meta.guide && (
+            <p className="mt-3 max-w-2xl text-sm leading-6">
+              <Link
+                href={meta.guide.href}
+                className="font-medium text-royal-strong underline underline-offset-4 hover:text-navy"
+              >
+                {meta.guide.label}
+              </Link>
+            </p>
+          )}
         </div>
         <Image
           src={art.src}
@@ -192,7 +202,7 @@ export default async function CalculatorPage({ params }: Props) {
 
       <section
         aria-label={`${meta.name} calculator`}
-        className="mt-8"
+        className="mt-6 sm:mt-8"
       >
         <CalculatorRunner slug={meta.slug} />
         <p className="mt-4 max-w-4xl text-xs leading-5 text-ink-muted">
@@ -203,7 +213,7 @@ export default async function CalculatorPage({ params }: Props) {
         </p>
       </section>
 
-      <article className="mt-12 space-y-10">
+      <article className="mt-9 space-y-8 sm:mt-12 sm:space-y-10">
         <section>
           <h2 className="text-xl font-semibold tracking-tight text-navy">
             How this calculator works
@@ -269,7 +279,7 @@ export default async function CalculatorPage({ params }: Props) {
       </article>
 
       {related.length > 0 && (
-        <section className="mt-12">
+        <section className="mt-9 sm:mt-12">
           <h2 className="text-xl font-semibold tracking-tight text-navy">
             Related calculators
           </h2>

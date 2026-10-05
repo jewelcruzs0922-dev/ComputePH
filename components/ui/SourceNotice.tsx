@@ -48,6 +48,9 @@ export default function SourceNotice({
             {source.effective && (
               <span className="text-ink-muted"> — {source.effective}</span>
             )}
+            {source.note && (
+              <span className="block text-xs text-ink-muted">{source.note}</span>
+            )}
           </li>
         ))}
       </ul>

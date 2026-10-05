@@ -21,6 +21,7 @@ export const RULES_LABOR = {
         "DOLE Labor Advisory No. 16-2025 — Guidelines on the Payment of the Thirteenth Month Pay",
       url: "https://dole.gov.ph/php_assets/uploads/2025/11/Labor-Advisory-No.-16-25-Guidelines-on-the-Payment-of-the-Thirteenth-Month-Pay.pdf",
       effective: "Calendar year 2025",
+      note: "Official DOLE PDF — the server may block automated access, so open it manually in a browser if the link does not load.",
     },
     {
       label: "Labor Code of the Philippines, Article 86 (night shift differential)",

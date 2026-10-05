@@ -54,7 +54,12 @@ export const metadata: Metadata = {
     description: SITE_DESCRIPTION,
     images: ["/images/social-card.png"],
   },
-  robots: { index: true, follow: true },
+  // Preview/development deployments must never be indexed alongside production.
+  robots: {
+    index:
+      !process.env.VERCEL_ENV || process.env.VERCEL_ENV === "production",
+    follow: true,
+  },
   verification: { google: "IJj3k3BmDseRHrSDxMTr0VBzy2tmKhcT-p1m3J44Q1A" },
 };
 

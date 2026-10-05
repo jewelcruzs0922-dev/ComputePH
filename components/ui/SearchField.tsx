@@ -41,7 +41,7 @@ export default function SearchField({
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className={`h-12 w-full rounded-full border border-line bg-white pl-11 text-base text-ink shadow-[0_2px_10px_rgba(15,61,115,0.06)] placeholder:text-ink-muted/70 focus:border-royal focus:outline-2 focus:outline-offset-2 focus:outline-royal xl:h-14 ${
+        className={`h-12 w-full rounded-full border border-line bg-white pl-11 text-base text-ink shadow-[0_2px_10px_rgba(15,61,115,0.06)] placeholder:text-ink-muted focus:border-royal focus:outline-2 focus:outline-offset-2 focus:outline-royal xl:h-14 ${
           onGo ? "pr-12 xl:pr-16" : "pr-4"
         }`}
       />

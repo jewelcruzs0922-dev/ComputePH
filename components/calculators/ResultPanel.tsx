@@ -11,7 +11,7 @@ function ResultRow({ line }: { line: ResultLine }) {
           </span>
         )}
       </span>
-      <span className="min-w-0 break-all text-right text-sm font-semibold tabular-nums text-navy">
+      <span className="min-w-0 break-words text-right text-sm font-semibold tabular-nums text-navy">
         {line.value}
       </span>
     </div>
@@ -71,7 +71,7 @@ export default function ResultPanel({
                     {line.hint}
                   </p>
                 )}
-                <p className="mt-3 break-all text-4xl font-bold tabular-nums tracking-tight text-navy">
+                <p className="mt-3 break-words text-3xl font-bold tabular-nums tracking-tight text-navy sm:text-4xl">
                   {line.value}
                 </p>
               </div>

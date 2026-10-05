@@ -30,6 +30,8 @@ export type CalculatorMeta = {
   usesRules?: boolean;
   /** Preferred related-calculator slugs (shown first on the page). */
   related?: string[];
+  /** Optional deep link to a written guide related to this calculator. */
+  guide?: { href: string; label: string };
 };
 
 export const CATEGORIES: Category[] = [
@@ -81,6 +83,11 @@ export const CALCULATORS: CalculatorMeta[] = [
     popular: true,
     usesRules: true,
     related: ["daily-hourly-salary", "overtime-pay", "income-tax"],
+    guide: {
+      href: "/guides/13th-month-pay-philippines",
+      label:
+        "Read the guide: 13th month pay rules, proration, and the December 24 deadline",
+    },
   },
   {
     slug: "overtime-pay",
@@ -101,6 +108,7 @@ export const CALCULATORS: CalculatorMeta[] = [
     aliases: ["overtime computation", "ot calculator", "extra time pay"],
     popular: true,
     usesRules: true,
+    related: ["night-differential", "daily-hourly-salary", "13th-month-pay"],
   },
   {
     slug: "night-differential",
@@ -120,6 +128,7 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
     aliases: ["night diff", "night differential pay", "graveyard shift pay"],
     usesRules: true,
+    related: ["overtime-pay", "daily-hourly-salary", "13th-month-pay"],
   },
   {
     slug: "daily-hourly-salary",
@@ -142,6 +151,7 @@ export const CALCULATORS: CalculatorMeta[] = [
       "daily rate calculator",
       "monthly to hourly",
     ],
+    related: ["sss", "philhealth", "pag-ibig"],
   },
   {
     slug: "sss",
@@ -162,6 +172,7 @@ export const CALCULATORS: CalculatorMeta[] = [
     aliases: ["sss employee share", "sss contribution table", "sss pagasa"],
     popular: true,
     usesRules: true,
+    related: ["philhealth", "pag-ibig", "income-tax"],
   },
   {
     slug: "philhealth",
@@ -180,6 +191,7 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
     aliases: ["philhealth employee share", "philhealth premium calculator"],
     usesRules: true,
+    related: ["sss", "pag-ibig", "income-tax"],
   },
   {
     slug: "pag-ibig",
@@ -198,6 +210,7 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
     aliases: ["pagibig share", "pag-ibig fund salary", "home development mutual fund"],
     usesRules: true,
+    related: ["sss", "philhealth", "loan"],
   },
   {
     slug: "income-tax",
@@ -222,6 +235,7 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
     popular: true,
     usesRules: true,
+    related: ["sss", "philhealth", "pag-ibig"],
   },
   {
     slug: "loan",
@@ -258,6 +272,7 @@ export const CALCULATORS: CalculatorMeta[] = [
       "savings interest",
     ],
     aliases: ["how much interest", "money growth", "deposit interest"],
+    related: ["loan", "installment", "discount"],
   },
   {
     slug: "discount",
@@ -267,11 +282,12 @@ export const CALCULATORS: CalculatorMeta[] = [
     summary:
       "Find the sale price and savings from any percentage discount.",
     description:
-      "Free discount calculator for the Philippines. Compute the final price and savings from any percentage discount, plus what you pay for every ₱100 of original price.",
+      "Free discount calculator for the Philippines. Compute the final price and savings from any percentage discount, including the 20% senior citizen and PWD discount.",
     keywords: [
       "discount calculator",
       "sale price calculator",
       "percentage off",
+      "20% discount",
     ],
     aliases: ["how much off", "price reduction", "20 percent discount"],
     popular: true,
@@ -293,6 +309,7 @@ export const CALCULATORS: CalculatorMeta[] = [
       "deferred payment",
     ],
     aliases: ["payment plan", "installment plan", "0 interest installment"],
+    related: ["loan", "interest", "discount"],
   },
 ];
 

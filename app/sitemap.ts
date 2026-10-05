@@ -5,14 +5,15 @@ import { SITE_URL } from "@/lib/site";
 
 /**
  * lastModified is only emitted when we have a reliable date: calculator pages
- * use the last-verified date of the official rules they follow. Pages without
- * a reliable content date omit lastModified instead of pretending every build
- * changed every page.
+ * use the last-verified date of the official rules they follow. Guide pages
+ * do the same for the rules they explain. Pages without a reliable content
+ * date omit lastModified instead of pretending every build changed every page.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: `${SITE_URL}/`,
+      // No trailing slash — matches the homepage canonical (metadataBase origin).
+      url: SITE_URL,
       changeFrequency: "weekly",
       priority: 1,
     },
@@ -45,5 +46,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: 0.8,
       };
     }),
+    {
+      url: `${SITE_URL}/guides/13th-month-pay-philippines`,
+      lastModified: new Date(RULES_BY_SLUG["13th-month-pay"].lastUpdated),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
   ];
 }

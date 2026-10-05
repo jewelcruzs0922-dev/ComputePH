@@ -81,6 +81,6 @@ export const SITE_TAGLINE =
   "Simple calculators for everyday life in the Philippines.";
 
 export const SITE_DESCRIPTION =
-  "Free Filipino-focused calculators for salary, 13th month pay, overtime, SSS, PhilHealth, Pag-IBIG, income tax, loans, discounts, and more. Fast, private, and easy to understand.";
+  "Free Filipino-focused calculators for salary, 13th month pay, overtime, SSS, PhilHealth, Pag-IBIG, income tax, loans, discounts, and more. Fast and private.";
 
 export const SITE_LOCALE = "en_PH";

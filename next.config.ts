@@ -43,6 +43,12 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   // Remove the X-Powered-By header from production responses.
   poweredByHeader: false,
+  // Honor the quality values set in components (75 is the Next default;
+  // 88/90 are used by the hero and logos). Without this list, Next ignores
+  // them and returns 400 for direct q=88/q=90 requests.
+  images: {
+    qualities: [75, 88, 90],
+  },
   async headers() {
     return [
       {

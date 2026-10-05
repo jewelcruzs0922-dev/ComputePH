@@ -8,6 +8,8 @@ export type RuleSource = {
   label: string;
   url: string;
   effective?: string;
+  /** Optional caveat shown next to the source (e.g. manual browser access). */
+  note?: string;
 };
 
 export type RuleMeta = {

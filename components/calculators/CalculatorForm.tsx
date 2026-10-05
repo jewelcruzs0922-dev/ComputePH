@@ -17,8 +17,11 @@ import {
 import { Button } from "@/components/ui/Button";
 import ResultPanel from "@/components/calculators/ResultPanel";
 import { CalculatorIcon } from "@/components/home/homeIcons";
+import { trackEvent } from "@/lib/analytics";
 
 type Props = {
+  /** Calculator slug — used only as a non-sensitive analytics identifier. */
+  slug?: string;
   fields: FieldDef[];
   calculate: (values: Record<string, number | string>) => CalcOutcome;
 };
@@ -211,7 +214,7 @@ function SegmentedInput({
   );
 }
 
-export default function CalculatorForm({ fields, calculate }: Props) {
+export default function CalculatorForm({ slug, fields, calculate }: Props) {
   const [raw, setRaw] = useState<RawValues>(() => formRawValues(fields));
   const [blurred, setBlurred] = useState<Record<string, boolean>>({});
   // Explicit-calculation flow: the result only exists after Calculate.
@@ -279,6 +282,9 @@ export default function CalculatorForm({ fields, calculate }: Props) {
     setOutcome(result);
     setDirty(false);
     if (result.ok) {
+      if (slug) {
+        trackEvent("calculation_completed", { calculator: slug });
+      }
       const headline =
         result.lines.find((line) => line.emphasis) ?? result.lines[0];
       setAnnouncement(

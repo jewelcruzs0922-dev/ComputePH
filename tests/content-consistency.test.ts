@@ -65,11 +65,83 @@ describe("Pag-IBIG content matches the configured rules", () => {
   });
 
   it("does not claim an unsupported ₱5,000 voluntary-savings maximum", () => {
-    expect(allText).not.toMatch(/₱5,000/);
+    expect(allText).not.toMatch(/₱5,000[^.]*voluntary/i);
+    expect(allText).not.toMatch(/voluntary[^.]*₱5,000/i);
     expect(allText).toMatch(
       /voluntary savings in addition to your mandatory contribution/i,
     );
     expect(allText).toMatch(/separate, voluntary program/);
+  });
+});
+
+describe("Kasambahay FAQ matches HDMF Circular 460", () => {
+  const c = CONTENT["pag-ibig"];
+  const faq = c.faqs.find((f) => /kasambahay/i.test(`${f.q} ${f.a}`))!;
+
+  it("exists", () => {
+    expect(faq).toBeTruthy();
+  });
+
+  it("states the mandatory savings below ₱5,000 is shouldered entirely by the employer", () => {
+    expect(faq.a).toMatch(/below ₱5,000/);
+    expect(faq.a).toMatch(/shouldered entirely by the employer/i);
+    expect(faq.a).toMatch(/3%/);
+    expect(faq.a).toMatch(/4%/);
+    expect(faq.a).toMatch(/₱1,500 or below/);
+  });
+
+  it("keeps the ₱5,000 boundary for proportionate sharing", () => {
+    expect(faq.a).toMatch(/₱5,000 or above/);
+    expect(faq.a).toMatch(/employee and employer sharing/i);
+  });
+
+  it("rejects the old misleading wording that the kasambahay pays 1%", () => {
+    expect(faq.a).not.toMatch(/pay\s+1%/i);
+    expect(faq.a).not.toMatch(/earning[s]?\s+₱1,500\s+or\s+below\s+pay/i);
+    expect(faq.a).not.toMatch(/employer still pays 2%/i);
+  });
+
+  it("does not imply the calculator computes a separate kasambahay savings", () => {
+    expect(faq.a).toMatch(/does not compute kasambahay savings separately/i);
+  });
+});
+
+describe("Night differential FAQ exceptions match the official categories", () => {
+  const c = CONTENT["night-differential"];
+  const faq = c.faqs.find((f) => /mandatory/i.test(f.q))!;
+
+  it("exists", () => {
+    expect(faq).toBeTruthy();
+  });
+
+  it("rejects the non-existent 'valid alternative arrangement' exception", () => {
+    expect(faq.a).not.toMatch(/valid alternative arrangement/i);
+  });
+
+  it("lists the recognized exception categories", () => {
+    expect(faq.a).toMatch(/government employees/i);
+    expect(faq.a).toMatch(/retail/i);
+    expect(faq.a).toMatch(/service establishments/i);
+    expect(faq.a).toMatch(/not more than five/i);
+    expect(faq.a).toMatch(/domestic or personal-service staff/i);
+    expect(faq.a).toMatch(/managerial employees/i);
+    expect(faq.a).toMatch(/field personnel/i);
+  });
+});
+
+describe("13th month school-year payment wording", () => {
+  const c = CONTENT["13th-month-pay"];
+
+  it("says 'remaining half' on or before December 24", () => {
+    expect(c.notes.join(" ")).toMatch(/and the remaining half on or before December 24/);
+  });
+
+  it("no longer contains the old 'and the half on or before' wording", () => {
+    expect(c.notes.join(" ")).not.toMatch(/and the half on or before/);
+  });
+
+  it("keeps the school-year installment as an optional employer choice", () => {
+    expect(c.notes.join(" ")).toMatch(/Employers may pay half before the regular school year opens/);
   });
 });
 

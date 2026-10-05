@@ -16,6 +16,11 @@ export const RULES_PHILHEALTH = {
   effective: "Calendar Year 2026",
   sources: [
     {
+      label: "PhilHealth circulars and advisories — official archive (CY 2026)",
+      url: "https://www.philhealth.gov.ph/circulars/2026/archives.php",
+      effective: "CY 2026",
+    },
+    {
       label:
         "PhilHealth advisory: 5% premium rate for 2026 (Philippine Information Agency)",
       url: "https://pia.gov.ph/news/philhealth-sets-5-premium-contribution-rate-for-2026/",

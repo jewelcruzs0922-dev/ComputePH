@@ -60,7 +60,8 @@ export default function HeroSection() {
 
           <p className="mt-3 max-w-[430px] text-[0.9375rem] leading-6 lg:max-w-[500px] lg:text-[1.0625rem] lg:leading-7 xl:max-w-[560px] xl:text-[1.25rem] xl:leading-8 text-ink">
             Accurate and easy-to-use calculators for your salary, taxes,
-            contributions, loans, discounts and more.
+            contributions, loans, discounts and more — built for the
+            Philippines.
           </p>
 
           <div className="mt-7">

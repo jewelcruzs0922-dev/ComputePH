@@ -100,7 +100,7 @@ export default function SiteFooter() {
             Pag-IBIG, BIR, DOLE, or any government agency. Results are estimates
             only — verify figures with the relevant agency.
           </p>
-          <p className="mt-2 text-[0.6875rem] leading-4 text-azure/60">
+          <p className="mt-2 text-[0.6875rem] leading-4 text-azure/70">
             Photos via Wikimedia Commons: office by Mehdigroup1601 (CC BY-SA
             4.0); Malacanang New Executive Building and HSBC Building, Binondo
             by the National Historical Commission of the Philippines (public
