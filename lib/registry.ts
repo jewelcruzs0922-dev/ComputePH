@@ -85,8 +85,7 @@ export const CALCULATORS: CalculatorMeta[] = [
     related: ["daily-hourly-salary", "overtime-pay", "income-tax"],
     guide: {
       href: "/guides/13th-month-pay-philippines",
-      label:
-        "Read the guide: 13th month pay rules, proration, and the December 24 deadline",
+      label: "Read the 13th month pay guide",
     },
   },
   {

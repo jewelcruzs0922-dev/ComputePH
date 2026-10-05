@@ -18,14 +18,14 @@ export type CalculatorContent = {
 export const CONTENT: Record<string, CalculatorContent> = {
   "13th-month-pay": {
     intro: [
-      "13th month pay is a mandatory cash benefit for rank-and-file employees in the private sector. Employers must pay it on or before December 24 each year, equal to one-twelfth of the basic salary you earned during the calendar year.",
-      "Use this calculator to estimate your 13th month pay from your monthly basic salary and how many months you worked this year — handy for partial years and mid-year hires. For partial months or changing salaries, use the actual basic salary earned; this month-based estimate assumes the salary is earned proportionally (for example 7.5 months) unless you enter your average (total basic earned ÷ months worked).",
+      "13th month pay is a mandatory cash benefit for rank-and-file employees in the private sector — one-twelfth of your basic salary for the year, due on or before December 24.",
+      "Estimate your 13th month pay from your monthly basic salary and the months you worked this year. For partial months or changing salaries, enter your average to prorate the year.",
     ],
     howItWorks: [
-      "Multiply your monthly basic salary by the number of months you worked this year to get your total basic salary earned.",
+      "Multiply your monthly basic salary by the number of months you worked this year; a partial year is earned proportionally (for example 7.5 months).",
       "Divide that total by 12 — the statutory divisor, regardless of how many months you actually worked.",
       "Overtime pay, night differential, holiday pay, allowances, and other non-regular earnings are excluded. Only basic salary counts.",
-      "If your salary changed during the year, enter an average (total basic salary earned ÷ months worked), or compute each period separately and add the results.",
+      "If your salary changed during the year, enter an average (total basic earned ÷ months worked), or compute each period separately and add the results.",
     ],
     formula: {
       summary: "13th month pay = total basic salary earned during the year ÷ 12",
