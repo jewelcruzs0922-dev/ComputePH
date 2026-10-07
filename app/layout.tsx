@@ -21,6 +21,9 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  // Monospace is only rendered on one page (the guide's formula block), so
+  // preloading it made every other page download a font it never uses.
+  preload: false,
 });
 
 export const metadata: Metadata = {

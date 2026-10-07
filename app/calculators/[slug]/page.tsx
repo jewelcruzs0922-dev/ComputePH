@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import CalculatorRunner from "@/components/calculators/CalculatorRunner";
+import { CALCULATOR_ENGINES } from "@/components/calculators/engines";
 import { CARD_ICONS } from "@/components/calculators/cardIcons";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import CalculatorCard from "@/components/ui/CalculatorCard";
@@ -80,7 +81,8 @@ export default async function CalculatorPage({ params }: Props) {
   const { slug } = await params;
   const meta = getCalculator(slug);
   const content = CONTENT[slug];
-  if (!meta || !content) notFound();
+  const engine = CALCULATOR_ENGINES[slug];
+  if (!meta || !content || !engine) notFound();
 
   const category = getCategory(meta.category);
   const rules = RULES_BY_SLUG[meta.slug];
@@ -204,7 +206,7 @@ export default async function CalculatorPage({ params }: Props) {
         aria-label={`${meta.name} calculator`}
         className="mt-6 sm:mt-8"
       >
-        <CalculatorRunner slug={meta.slug} />
+        <CalculatorRunner slug={meta.slug} fields={engine.fields} />
         <p className="mt-4 max-w-4xl text-xs leading-5 text-ink-muted">
           ComputePH is an independent calculator — results are estimates for
           informational purposes and may differ from official calculations or

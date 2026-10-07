@@ -23,7 +23,13 @@ type Props = {
   /** Calculator slug — used only as a non-sensitive analytics identifier. */
   slug?: string;
   fields: FieldDef[];
-  calculate: (values: Record<string, number | string>) => CalcOutcome;
+  /**
+   * Runs on the explicit Calculate click. Returning a promise is supported so
+   * the engine can be code-split; a plain synchronous result still works.
+   */
+  calculate: (
+    values: Record<string, number | string>,
+  ) => CalcOutcome | Promise<CalcOutcome>;
 };
 
 const FIELD_CLASSES =
@@ -246,7 +252,7 @@ export default function CalculatorForm({ slug, fields, calculate }: Props) {
     setAnnouncement("");
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setAttempted(true);
 
@@ -270,7 +276,7 @@ export default function CalculatorForm({ slug, fields, calculate }: Props) {
     // Never let an engine exception break the page — surface a readable message.
     let result: CalcOutcome;
     try {
-      result = calculate(validation.values);
+      result = await calculate(validation.values);
     } catch {
       result = {
         ok: false,
