@@ -256,6 +256,7 @@ export default function CalculatorForm({ slug, fields, calculate }: Props) {
   const [dirty, setDirty] = useState(false);
   const [announcement, setAnnouncement] = useState("");
   const [showResult, setShowResult] = useState(false);
+  const [copied, setCopied] = useState(false);
   const [compactResultHeight, setCompactResultHeight] = useState<number | null>(
     null,
   );
@@ -308,6 +309,12 @@ export default function CalculatorForm({ slug, fields, calculate }: Props) {
     };
   }, [showResult, outcome, dirty, fields]);
 
+  useEffect(() => {
+    if (!copied) return;
+    const timer = window.setTimeout(() => setCopied(false), 2000);
+    return () => window.clearTimeout(timer);
+  }, [copied]);
+
   const validation = useMemo(
     () => validateFields(fields, raw),
     [fields, raw],
@@ -340,6 +347,42 @@ export default function CalculatorForm({ slug, fields, calculate }: Props) {
     } else {
       setShowResult(true);
     }
+  }
+
+  const resultText =
+    outcome?.ok === true
+      ? [
+          document.title,
+          ...outcome.lines.map((line) => `${line.label}: ${line.value}`),
+          window.location.href,
+        ].join("\n")
+      : "";
+
+  async function copyResult() {
+    if (!resultText) return;
+    try {
+      await navigator.clipboard.writeText(resultText);
+      setCopied(true);
+    } catch {
+      setCopied(false);
+    }
+  }
+
+  async function shareResult() {
+    if (!resultText) return;
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: document.title,
+          text: resultText,
+          url: window.location.href,
+        });
+        return;
+      } catch (error) {
+        if ((error as DOMException).name === "AbortError") return;
+      }
+    }
+    await copyResult();
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -531,6 +574,54 @@ export default function CalculatorForm({ slug, fields, calculate }: Props) {
           </svg>
         </button>
         <span className="mt-1 text-sm font-semibold text-navy">Result</span>
+        {showResult && outcome?.ok === true && (
+          <div className="mt-3 flex flex-wrap justify-center gap-2">
+            <Button
+              variant="secondary"
+              onClick={shareResult}
+              className="min-w-28"
+              aria-label="Share result"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+                className="h-4 w-4"
+              >
+                <circle cx="18" cy="5" r="3" />
+                <circle cx="6" cy="12" r="3" />
+                <circle cx="18" cy="19" r="3" />
+                <path d="M8.6 10.5l6.8-4M8.6 13.5l6.8 4" />
+              </svg>
+              Share
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={copyResult}
+              className="min-w-28"
+              aria-label="Copy result"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+                className="h-4 w-4"
+              >
+                <rect x="9" y="9" width="13" height="13" rx="2" />
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+              </svg>
+              {copied ? "Copied" : "Copy"}
+            </Button>
+          </div>
+        )}
       </div>
 
       <p aria-live="polite" className="sr-only">
