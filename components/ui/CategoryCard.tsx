@@ -114,7 +114,7 @@ export default function CategoryCard({
       <span className="mb-2 text-navy">
         <Icon className="h-28 w-28" />
       </span>
-      <span className="mb-4 text-2xl font-semibold text-navy sm:text-3xl">
+      <span className="mb-4 text-center text-2xl font-semibold text-navy sm:text-3xl">
         {category.name}
       </span>
       {card}
