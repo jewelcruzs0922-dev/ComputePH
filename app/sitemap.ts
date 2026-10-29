@@ -12,8 +12,8 @@ import { SITE_URL } from "@/lib/site";
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      // Match the homepage canonical URL, which resolves to the trailing slash.
-      url: `${SITE_URL}/`,
+      // Match the homepage canonical URL emitted by the metadata API.
+      url: SITE_URL,
       changeFrequency: "weekly",
       priority: 1,
     },
