@@ -3,19 +3,23 @@ import Link from "next/link";
 import SourceNotice from "@/components/ui/SourceNotice";
 import { RULES_BY_SLUG } from "@/lib/rules";
 import { SITE_URL } from "@/lib/site";
+import { socialMetadata } from "@/lib/metadata";
 
 const PATH = "/guides/13th-month-pay-philippines";
+const TITLE = "13th Month Pay in the Philippines: Rules and Proration";
+const DESCRIPTION =
+  "How 13th month pay works in the Philippines: who receives it, the one-twelfth formula, proration, what counts as basic salary, and the December 24 deadline.";
 
 export const metadata: Metadata = {
-  title: "13th Month Pay in the Philippines: Rules and Proration",
-  description:
-    "How 13th month pay works in the Philippines: who receives it, the one-twelfth formula, proration, what counts as basic salary, and the December 24 deadline.",
+  title: TITLE,
+  description: DESCRIPTION,
   keywords: [
     "13th month pay",
     "13th month pay philippines",
     "13th month pay rules",
   ],
   alternates: { canonical: PATH },
+  ...socialMetadata({ title: TITLE, description: DESCRIPTION, path: PATH }),
 };
 
 const rules = RULES_BY_SLUG["13th-month-pay"];
@@ -39,6 +43,16 @@ const jsonLd = {
           item: `${SITE_URL}${PATH}`,
         },
       ],
+    },
+    {
+      "@type": "Article",
+      headline: TITLE,
+      description: DESCRIPTION,
+      mainEntityOfPage: `${SITE_URL}${PATH}`,
+      dateModified: rules.lastUpdated,
+      inLanguage: "en-PH",
+      author: { "@type": "Organization", name: "ComputePH" },
+      publisher: { "@type": "Organization", name: "ComputePH" },
     },
   ],
 };

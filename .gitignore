@@ -41,3 +41,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# playwright chrome debug profile
+/.chrome-profile/
+
+# local audit, automation, and capture artifacts
+/audit/
+/.playwright-mcp/
+/scripts/
+/ComputePH-all-code.txt
+/*.png

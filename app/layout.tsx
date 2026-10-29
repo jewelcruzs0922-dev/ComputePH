@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
-import Clarity from "@/components/analytics/Clarity";
+import AnalyticsConsent from "@/components/analytics/AnalyticsConsent";
 import SiteHeader from "@/components/layout/SiteHeader";
 import SiteFooter from "@/components/layout/SiteFooter";
 import {
@@ -49,7 +48,14 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     title: `${SITE_NAME} — ${SITE_TAGLINE}`,
     description: SITE_DESCRIPTION,
-    images: [{ url: "/images/social-card.png", width: 1200, height: 630 }],
+    images: [
+      {
+        url: "/images/social-card.png",
+        width: 1200,
+        height: 630,
+        alt: `${SITE_NAME} — ${SITE_TAGLINE}`,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -78,8 +84,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <SiteFooter />
-        <Analytics />
-        <Clarity />
+        <AnalyticsConsent />
       </body>
     </html>
   );

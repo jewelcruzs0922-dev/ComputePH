@@ -1,94 +1,71 @@
-﻿import CalculatorCard from "@/components/ui/CalculatorCard";
-import FeaturedCalculatorCard from "@/components/ui/FeaturedCalculatorCard";
-import SectionHeading from "@/components/ui/SectionHeading";
+import Link from "next/link";
+import PopularCalculatorCard from "@/components/ui/PopularCalculatorCard";
 import { getCalculator } from "@/lib/registry";
-import {
-  CalendarIcon,
-  CalculatorIcon,
-  ClockIcon,
-  FileIcon,
-  ShieldIcon,
-  TagIcon,
-} from "@/components/home/homeIcons";
 
 const POPULAR = [
-  { slug: "13th-month-pay", Icon: CalendarIcon },
-  { slug: "overtime-pay", Icon: ClockIcon },
-  { slug: "sss", Icon: ShieldIcon },
-  { slug: "income-tax", Icon: FileIcon },
-  { slug: "loan", Icon: CalculatorIcon },
-  { slug: "discount", Icon: TagIcon },
+  {
+    slug: "13th-month-pay",
+    imageSrc: "/images/popular-13th-pay-handoff.jpg",
+  },
+  {
+    slug: "overtime-pay",
+    imageSrc: "/images/popular-overtime-payment.jpg",
+  },
+  {
+    slug: "sss",
+    imageSrc: "/images/popular-sss-filling.jpg",
+  },
+  {
+    slug: "income-tax",
+    imageSrc: "/images/popular-income-tax-counting.jpg",
+  },
+  {
+    slug: "loan",
+    imageSrc: "/images/popular-loan-calculator.jpg",
+  },
+  {
+    slug: "discount",
+    imageSrc: "/images/popular-discount-sign.jpg",
+  },
 ] as const;
 
-/** Photo matched to what each calculator actually computes. */
-const CARD_IMAGES: Record<string, string> = {
-  "overtime-pay": "/images/card-overtime.jpg",
-  sss: "/images/card-sss.jpg",
-  "income-tax": "/images/card-tax.jpg",
-  loan: "/images/card-loan.jpg",
-  discount: "/images/card-discount.jpg",
-};
-
 export default function PopularCalculators() {
-  const items = POPULAR.map((p) => ({
-    ...p,
-    meta: getCalculator(p.slug),
-  })).filter((p) => p.meta);
-
-  const [featured, ...rest] = items;
+  const items = POPULAR.map((item) => ({
+    ...item,
+    meta: getCalculator(item.slug),
+  })).filter((item) => item.meta);
 
   return (
     <section aria-labelledby="popular-heading" className="bg-white">
-      <div className="mx-auto w-full max-w-[1680px] px-4 py-10 sm:px-6 lg:px-14">
-        <SectionHeading
+      <div className="mx-auto w-full max-w-[1680px] px-4 pb-10 pt-24 sm:px-6 lg:px-14">
+        <h2
           id="popular-heading"
-          eyebrow="Popular calculators"
-          title="Quick access to what you need"
-          action={{ href: "/calculators", label: "View all calculators" }}
-        />
+          className="text-center text-[2.5rem] font-bold tracking-tight text-navy sm:text-[3.25rem]"
+        >
+          Popular calculators
+        </h2>
 
-        <ul className="mt-6 grid gap-4 lg:grid-cols-[1.75fr_1fr_1fr]">
-          <li>
-            <FeaturedCalculatorCard
-              slug={featured.slug}
-              name={featured.meta!.name}
-              summary={featured.meta!.summary}
-              icon={<featured.Icon className="h-5 w-5" />}
-              badge="Most Popular"
-              imageSrc="/images/calc-document.jpg"
-            />
-          </li>
-          {rest.slice(0, 2).map(({ slug, meta, Icon }) => (
+        <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {items.map(({ slug, meta, imageSrc }) => (
             <li key={slug}>
-              <CalculatorCard
+              <PopularCalculatorCard
                 slug={slug}
                 name={meta!.name}
-                summary={meta!.summary}
-                icon={<Icon className="h-5 w-5" />}
+                imageSrc={imageSrc}
                 tone="yellow"
-                imageSrc={CARD_IMAGES[slug]}
-                titleSizeClass="text-[1.0625rem] xl:text-[1.3125rem]"
               />
             </li>
           ))}
         </ul>
 
-        <ul className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {rest.slice(2).map(({ slug, meta, Icon }) => (
-            <li key={slug}>
-              <CalculatorCard
-                slug={slug}
-                name={meta!.name}
-                summary={meta!.summary}
-                icon={<Icon className="h-5 w-5" />}
-                tone="blue"
-                align="end"
-                imageSrc={CARD_IMAGES[slug]}
-                titleSizeClass="text-[1.0625rem] xl:text-[1.3125rem]"
-              />
-            </li>
-          ))}
-        </ul>
+        <div className="mt-8 flex justify-center">
+          <Link
+            href="/calculators"
+            className="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-royal/35 px-6 text-sm font-semibold text-royal-strong transition-colors hover:border-royal/35 hover:text-navy hover:ring-2 hover:ring-royal/35 hover:ring-offset-2 hover:ring-offset-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-royal"
+          >
+            View all calculators
+          </Link>
+        </div>
       </div>
     </section>
   );

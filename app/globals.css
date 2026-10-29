@@ -40,10 +40,16 @@
 html {
   -webkit-text-size-adjust: 100%;
   /* Sticky header sits below the viewport top. */
-  scroll-padding-top: 5.5rem;
+  scroll-padding-top: 7rem;
   /* One knob: every text size on the site is rem-based, so this scales all
      type (and Tailwind spacing) together. 16px = browser default. */
   font-size: 18px;
+}
+
+@media (min-width: 768px) {
+  html {
+    scroll-padding-top: 5.75rem;
+  }
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -52,10 +58,15 @@ html {
   }
 }
 
+html {
+  overflow-x: clip;
+}
+
 body {
   background: #ffffff;
   color: var(--color-ink);
   font-family: var(--font-sans);
+  overflow-x: clip;
 }
 
 :focus-visible {

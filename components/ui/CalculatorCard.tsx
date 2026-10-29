@@ -21,6 +21,16 @@ type Props = {
   size?: "sm" | "lg";
   /** Override the icon chip colors (e.g. match the category panel header). */
   iconChip?: string;
+  /** Center the icon and title above left-aligned body copy. */
+  centerHeader?: boolean;
+  /** Hide the trailing arrow button. */
+  hideArrow?: boolean;
+  /** Render the icon without its colored circular container. */
+  bareIcon?: boolean;
+  /** Use a thicker card border. */
+  thickBorder?: boolean;
+  /** Compact centered tile for related-calculator rows. */
+  tile?: boolean;
 };
 
 /**
@@ -40,6 +50,11 @@ export default function CalculatorCard({
   titleSizeClass = "text-[0.9375rem]",
   size = "sm",
   iconChip,
+  centerHeader = false,
+  hideArrow = false,
+  bareIcon = false,
+  thickBorder = false,
+  tile = false,
 }: Props) {
   const lg = size === "lg";
   const yellow = featured || tone === "yellow";
@@ -70,17 +85,39 @@ export default function CalculatorCard({
     </span>
   );
 
+  if (tile) {
+    return (
+      <Link
+        href={`/calculators/${slug}`}
+        className="group flex min-h-[220px] flex-col items-center justify-center gap-6 rounded-2xl border-2 border-navy bg-white p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:border-royal hover:shadow-[0_10px_24px_rgba(15,61,115,0.10)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-royal"
+      >
+        {icon && (
+          <span className="flex h-16 w-16 items-center justify-center rounded-full text-navy transition-colors duration-300 group-hover:bg-brand">
+            {icon}
+          </span>
+        )}
+        <span className="text-xl font-bold tracking-tight text-navy">
+          {name}
+        </span>
+      </Link>
+    );
+  }
+
   return (
     <Link
       href={`/calculators/${slug}`}
       className={[
-        "group relative flex h-full flex-col overflow-hidden transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-royal",
+        "group relative flex h-full flex-col overflow-hidden transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-royal",
+        thickBorder ? "hover:-translate-y-2" : "",
         lg ? "rounded-2xl p-5 sm:p-6" : "rounded-xl p-4",
+        thickBorder ? "border-2" : "border",
         yellow
-          ? "border border-brand/50 bg-brand-soft shadow-[0_1px_2px_rgba(15,61,115,0.06)] hover:shadow-[0_10px_24px_rgba(15,61,115,0.12)]"
+          ? "border-brand/50 bg-brand-soft shadow-[0_1px_2px_rgba(15,61,115,0.06)] hover:shadow-[0_10px_24px_rgba(15,61,115,0.12)]"
           : blue
-            ? "border border-royal/25 bg-azure shadow-[0_1px_2px_rgba(15,61,115,0.05)] hover:border-royal/50 hover:shadow-[0_10px_24px_rgba(15,61,115,0.12)]"
-            : "border border-line bg-white shadow-[0_1px_2px_rgba(15,61,115,0.04)] hover:border-royal/40 hover:shadow-[0_10px_24px_rgba(15,61,115,0.10)]",
+            ? "border-royal/25 bg-azure shadow-[0_1px_2px_rgba(15,61,115,0.05)] hover:border-royal/50 hover:shadow-[0_10px_24px_rgba(15,61,115,0.12)]"
+            : thickBorder
+              ? "border-navy bg-white shadow-[0_1px_2px_rgba(15,61,115,0.04)] hover:border-royal hover:shadow-[0_10px_24px_rgba(15,61,115,0.10)]"
+              : "border-line bg-white shadow-[0_1px_2px_rgba(15,61,115,0.04)] hover:border-royal/40 hover:shadow-[0_10px_24px_rgba(15,61,115,0.10)]",
       ].join(" ")}
     >
       {imageSrc && (
@@ -99,18 +136,35 @@ export default function CalculatorCard({
         </span>
       )}
 
+      {thickBorder && (
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-20 rounded-2xl shadow-[inset_0_2px_14px_rgba(15,61,115,0.12)]"
+        />
+      )}
+
       <div className="relative z-10 flex h-full flex-col">
         {hasTopRow && (
-          <span className="flex items-start justify-between gap-3">
+          <span
+            className={`flex items-start gap-3 ${
+              centerHeader ? "justify-center" : "justify-between"
+            }`}
+          >
             {icon ? (
-              <span
-                className={[
-                  "flex h-9 w-9 items-center justify-center rounded-full",
-                  iconChipCls,
-                ].join(" ")}
-              >
-                {icon}
-              </span>
+              bareIcon ? (
+                <span className="inline-flex items-center justify-center rounded-full p-2 text-navy transition-colors duration-300 group-hover:bg-brand">
+                  {icon}
+                </span>
+              ) : (
+                <span
+                  className={[
+                    "flex h-9 w-9 items-center justify-center rounded-full",
+                    iconChipCls,
+                  ].join(" ")}
+                >
+                  {icon}
+                </span>
+              )
             ) : (
               <span />
             )}
@@ -125,8 +179,9 @@ export default function CalculatorCard({
           <>
             <span
               className={[
-                "text-xl font-bold leading-7 text-navy group-hover:underline",
+                "text-xl font-bold leading-7 text-navy",
                 hasTopRow ? "mt-4" : "",
+                centerHeader ? "text-center" : "",
               ].join(" ")}
             >
               {name}
@@ -135,7 +190,7 @@ export default function CalculatorCard({
               <span className="text-base leading-6 text-ink-muted">
                 {summary}
               </span>
-              {arrow()}
+              {!hideArrow && arrow()}
             </span>
           </>
         ) : (
@@ -143,7 +198,7 @@ export default function CalculatorCard({
             <span
               className={[
                 titleSizeClass,
-                "font-bold text-navy group-hover:underline",
+                "font-bold text-navy",
                 hasTopRow ? "mt-4" : "",
               ].join(" ")}
             >

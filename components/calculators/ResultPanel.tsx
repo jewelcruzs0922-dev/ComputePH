@@ -2,16 +2,16 @@ import type { CalcOutcome, ResultLine } from "@/lib/types";
 
 function ResultRow({ line }: { line: ResultLine }) {
   return (
-    <div className="flex items-baseline justify-between gap-4 py-3">
-      <span className="text-sm text-ink-muted">
+    <div className="flex flex-col items-start gap-1 py-3 min-[360px]:flex-row min-[360px]:items-baseline min-[360px]:justify-between min-[360px]:gap-4">
+      <span className="min-w-0 flex-1 text-base text-ink-muted sm:text-lg">
         {line.label}
         {line.hint && (
-          <span className="mt-0.5 block text-xs text-ink-muted">
+          <span className="mt-0.5 block text-sm text-ink-muted">
             {line.hint}
           </span>
         )}
       </span>
-      <span className="min-w-0 break-words text-right text-sm font-semibold tabular-nums text-navy">
+      <span className="shrink-0 whitespace-nowrap text-base font-semibold tabular-nums text-navy min-[360px]:text-right">
         {line.value}
       </span>
     </div>
@@ -40,15 +40,15 @@ export default function ResultPanel({
   return (
     <div className="rounded-2xl border border-royal/20 bg-azure p-5 sm:p-6">
       {outcome === null ? (
-        <p className="text-base text-ink-muted">
+        <p className="text-lg text-ink-muted">
           {attempted
             ? "Fix the highlighted fields to see your result."
             : "Enter your details and select Calculate to see your result."}
         </p>
       ) : outcome.ok === false ? (
-        <p className="text-base font-medium text-navy">{outcome.error}</p>
+        <p className="text-lg font-medium text-navy">{outcome.error}</p>
       ) : outcome.lines.length === 0 ? (
-        <p className="text-base text-ink-muted">
+        <p className="text-lg text-ink-muted">
           Nothing to compute with these values yet.
         </p>
       ) : (
@@ -65,13 +65,13 @@ export default function ResultPanel({
                 key={line.label}
                 className="border-b border-royal/20 pb-4"
               >
-                <p className="text-base font-bold text-navy">{line.label}</p>
+                <p className="text-xl font-bold text-navy">{line.label}</p>
                 {line.hint && (
-                  <p className="mt-1 text-sm leading-5 text-ink-muted">
+                  <p className="mt-1 text-base leading-6 text-ink-muted">
                     {line.hint}
                   </p>
                 )}
-                <p className="mt-3 break-words text-3xl font-bold tabular-nums tracking-tight text-navy sm:text-4xl">
+                <p className="mt-3 break-words text-4xl font-bold tabular-nums tracking-tight text-navy sm:text-5xl">
                   {line.value}
                 </p>
               </div>
@@ -84,7 +84,7 @@ export default function ResultPanel({
               ))}
           </div>
           {dirty && (
-            <p className="mt-4 border-t border-royal/20 pt-3 text-sm text-ink-muted">
+            <p className="mt-4 border-t border-royal/20 pt-3 text-base text-ink-muted">
               Inputs changed since this result was calculated — select
               Calculate to update.
             </p>

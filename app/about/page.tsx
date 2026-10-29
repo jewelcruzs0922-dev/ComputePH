@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
+import { socialMetadata } from "@/lib/metadata";
+
+const TITLE = "About Us";
+const DESCRIPTION =
+  "ComputePH is an independent Filipino-focused calculator website for salary, contributions, taxes, and loans — free, private, and easy to understand.";
 
 export const metadata: Metadata = {
-  title: "About Us",
-  description:
-    "ComputePH is an independent Filipino-focused calculator website for salary, contributions, taxes, and loans — free, private, and easy to understand.",
+  title: TITLE,
+  description: DESCRIPTION,
   alternates: { canonical: "/about" },
+  ...socialMetadata({ title: TITLE, description: DESCRIPTION, path: "/about" }),
 };
 
 export default function AboutPage() {

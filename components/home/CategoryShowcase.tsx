@@ -1,23 +1,18 @@
 ﻿import CategoryCard from "@/components/ui/CategoryCard";
-import SectionHeading from "@/components/ui/SectionHeading";
 import { CATEGORIES } from "@/lib/registry";
 
 export default function CategoryShowcase() {
   return (
     <section aria-labelledby="categories-heading" className="bg-mist">
       <div className="mx-auto w-full max-w-[1680px] px-4 py-10 sm:px-6 lg:px-14">
-        <SectionHeading
+        <h2
           id="categories-heading"
-          eyebrow="Browse by category"
-          title={
-            <>
-              Find the right calculator
-              <br />
-              for your needs.
-            </>
-          }
-          action={{ href: "/calculators", label: "Explore all" }}
-        />
+          className="text-center text-[2.25rem] font-bold tracking-tight text-navy sm:text-[2.75rem] xl:text-[3.25rem]"
+        >
+          Find the right calculator
+          <br />
+          for your needs.
+        </h2>
 
         <div className="mt-6 grid gap-4 md:grid-cols-3">
           {CATEGORIES.map((cat) => (

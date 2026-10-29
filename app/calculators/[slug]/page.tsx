@@ -1,45 +1,32 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import CalculatorRunner from "@/components/calculators/CalculatorRunner";
 import { CALCULATOR_ENGINES } from "@/components/calculators/engines";
 import { CARD_ICONS } from "@/components/calculators/cardIcons";
-import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import CalculatorCard from "@/components/ui/CalculatorCard";
 import Container from "@/components/ui/Container";
 import FaqSection from "@/components/ui/FaqSection";
 import InfoSection from "@/components/ui/InfoSection";
 import SourceNotice from "@/components/ui/SourceNotice";
-import {
-  BankIcon,
-  BriefcaseIcon,
-  CoinsIcon,
-} from "@/components/home/homeIcons";
+import { ArrowIcon } from "@/components/home/homeIcons";
 import { CONTENT } from "@/lib/content";
 import {
   CALCULATORS,
-  getCategory,
   getCalculator,
   relatedCalculators,
-  type CategoryId,
 } from "@/lib/registry";
 import { RULES_BY_SLUG } from "@/lib/rules";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
+import { socialMetadata } from "@/lib/metadata";
 
-/** Header pill icon + decorative header art per category (mockup layout). */
-const CATEGORY_ART: Record<
-  CategoryId,
-  { src: string; w: number; h: number; Icon: typeof BriefcaseIcon }
-> = {
-  work: { src: "/images/cat-work.png", w: 1530, h: 1028, Icon: BriefcaseIcon },
-  government: {
-    src: "/images/cat-government.png",
-    w: 1654,
-    h: 951,
-    Icon: BankIcon,
-  },
-  money: { src: "/images/cat-money.png", w: 1880, h: 836, Icon: CoinsIcon },
+const HOW_IT_WORKS_TITLES: Record<string, string[]> = {
+  "13th-month-pay": [
+    "Start with basic",
+    "Divide by 12",
+    "Exclude extras",
+    "Handle changes",
+  ],
 };
 
 type Props = { params: Promise<{ slug: string }> };
@@ -60,20 +47,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: meta.description,
     keywords: meta.keywords,
     alternates: { canonical },
-    openGraph: {
+    ...socialMetadata({
       title: meta.title,
       description: meta.description,
-      url: canonical,
-      siteName: SITE_NAME,
-      type: "website",
-      images: [{ url: "/images/social-card.png", width: 1200, height: 630 }],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: meta.title,
-      description: meta.description,
-      images: ["/images/social-card.png"],
-    },
+      path: canonical,
+    }),
   };
 }
 
@@ -84,12 +62,9 @@ export default async function CalculatorPage({ params }: Props) {
   const engine = CALCULATOR_ENGINES[slug];
   if (!meta || !content || !engine) notFound();
 
-  const category = getCategory(meta.category);
   const rules = RULES_BY_SLUG[meta.slug];
   const related = relatedCalculators(meta, 3);
   const canonical = `${SITE_URL}/calculators/${meta.slug}`;
-  const art = CATEGORY_ART[meta.category];
-  const CatIcon = art.Icon;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -152,54 +127,10 @@ export default async function CalculatorPage({ params }: Props) {
         }}
       />
 
-      <Breadcrumbs
-        items={[
-          { label: "Home", href: "/" },
-          { label: "Calculators", href: "/calculators" },
-          { label: meta.name },
-        ]}
-      />
-
-      <header className="mt-3 sm:mt-5 xl:grid xl:grid-cols-[max-content_auto] xl:justify-start xl:items-start xl:gap-16">
-        <div className="max-w-3xl">
-          <Link
-            href={`/calculators/#${category.anchor}`}
-            className="inline-flex items-center gap-2 rounded-full border border-royal/30 bg-royal-soft px-3.5 py-1.5 text-sm font-semibold text-royal-strong transition-colors hover:border-royal"
-          >
-            <CatIcon className="h-4 w-4" />
-            {category.name}
-          </Link>
-          <h1 className="mt-2.5 text-2xl font-bold leading-[1.2] tracking-tight text-navy sm:mt-3 sm:text-4xl sm:leading-tight">
-            {meta.title}
-          </h1>
-          {content.intro.map((paragraph, i) => (
-            <p
-              key={paragraph}
-              className={`max-w-2xl text-base leading-6 text-ink-muted sm:leading-7${i === 0 ? " mt-2.5 sm:mt-3" : " mt-2"}`}
-            >
-              {paragraph}
-            </p>
-          ))}
-          {meta.guide && (
-            <p className="mt-3 max-w-2xl text-sm leading-6">
-              <Link
-                href={meta.guide.href}
-                className="font-medium text-royal-strong underline underline-offset-4 hover:text-navy"
-              >
-                {meta.guide.label}
-              </Link>
-            </p>
-          )}
-        </div>
-        <Image
-          src={art.src}
-          alt=""
-          aria-hidden="true"
-          width={art.w}
-          height={art.h}
-          sizes="(min-width: 1536px) 360px, 300px"
-          className="mt-1 hidden h-auto w-[420px] select-none xl:block 2xl:w-[520px]"
-        />
+      <header className="mt-3 text-center sm:mt-5">
+        <h1 className="mx-auto max-w-4xl text-4xl font-bold leading-[1.15] tracking-tight text-navy sm:text-6xl sm:leading-tight">
+          {meta.title}
+        </h1>
       </header>
 
       <section
@@ -207,7 +138,31 @@ export default async function CalculatorPage({ params }: Props) {
         className="mt-6 sm:mt-8"
       >
         <CalculatorRunner slug={meta.slug} fields={engine.fields} />
-        <p className="mt-4 max-w-4xl text-xs leading-5 text-ink-muted">
+
+        <div className="mx-auto mt-8 max-w-3xl text-center">
+          {content.intro.map((paragraph, i) => (
+            <p
+              key={paragraph}
+              className={`text-base leading-7 text-ink-muted${
+                i === 0 ? "" : " mt-3"
+              }`}
+            >
+              {paragraph}
+            </p>
+          ))}
+          {meta.guide && (
+            <p className="mt-4 text-sm leading-6">
+              <Link
+                href={meta.guide.href}
+                className="font-medium text-royal-strong underline underline-offset-4 hover:text-navy max-lg:inline-block max-lg:py-2.5"
+              >
+                {meta.guide.label}
+              </Link>
+            </p>
+          )}
+        </div>
+
+        <p className="mx-auto mt-6 max-w-4xl text-center text-xs leading-5 text-ink-muted">
           ComputePH is an independent calculator — results are estimates for
           informational purposes and may differ from official calculations or
           individual circumstances. Confirm important figures with your
@@ -217,23 +172,42 @@ export default async function CalculatorPage({ params }: Props) {
 
       <article className="mt-9 space-y-8 sm:mt-12 sm:space-y-10">
         <section>
-          <h2 className="text-xl font-semibold tracking-tight text-navy">
+          <h2 className="text-center text-3xl font-bold tracking-tight text-navy sm:text-4xl">
             How this calculator works
           </h2>
-          <ol className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {content.howItWorks.map((step, index) => (
-              <li key={step} className="flex items-start gap-3">
-                <span
-                  aria-hidden="true"
-                  className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-brand text-base font-bold text-navy"
-                >
-                  {index + 1}
-                </span>
-                <span className="text-base font-medium leading-6 text-navy">
-                  {step}
-                </span>
-              </li>
-            ))}
+          <ol className="mt-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            {content.howItWorks.map((step, index) => {
+              const title =
+                HOW_IT_WORKS_TITLES[meta.slug]?.[index] ?? `Step ${index + 1}`;
+              return (
+                <li key={step} className="relative">
+                  <div className="flex h-full min-h-[190px] gap-4 rounded-[1.75rem] bg-brand-soft p-5 sm:p-6">
+                    <span
+                      aria-hidden="true"
+                      className="text-5xl font-bold leading-none tracking-tight text-brand-strong"
+                    >
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className="flex min-w-0 flex-1 flex-col border-l border-dashed border-navy/20 pl-4">
+                      <span className="text-xl font-bold tracking-tight text-navy">
+                        {title}
+                      </span>
+                      <span className="mt-2 text-base leading-6 text-ink-muted">
+                        {step}
+                      </span>
+                    </span>
+                  </div>
+                  {index < content.howItWorks.length - 1 && (
+                    <span
+                      aria-hidden="true"
+                      className="absolute -right-7 top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-navy text-white xl:flex"
+                    >
+                      <ArrowIcon className="h-5 w-5" />
+                    </span>
+                  )}
+                </li>
+              );
+            })}
           </ol>
         </section>
 
@@ -282,10 +256,10 @@ export default async function CalculatorPage({ params }: Props) {
 
       {related.length > 0 && (
         <section className="mt-9 sm:mt-12">
-          <h2 className="text-xl font-semibold tracking-tight text-navy">
+          <h2 className="text-center text-3xl font-bold tracking-tight text-navy sm:text-4xl">
             Related calculators
           </h2>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-4 grid gap-4 md:grid-cols-3">
             {related.map((item) => {
               const Icon = CARD_ICONS[item.slug];
               return (
@@ -294,7 +268,8 @@ export default async function CalculatorPage({ params }: Props) {
                   slug={item.slug}
                   name={item.name}
                   summary={item.summary}
-                  icon={Icon ? <Icon className="h-5 w-5" /> : undefined}
+                  icon={Icon ? <Icon className="h-10 w-10" /> : undefined}
+                  tile
                 />
               );
             })}

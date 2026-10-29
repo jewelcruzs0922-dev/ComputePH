@@ -129,6 +129,33 @@ describe("Night differential FAQ exceptions match the official categories", () =
   });
 });
 
+describe("Night differential content states the calculator's ordinary-day scope", () => {
+  const c = CONTENT["night-differential"];
+  const allText = [
+    ...c.intro,
+    ...c.howItWorks,
+    c.formula.summary,
+    ...c.formula.lines,
+    ...c.notes,
+    ...c.faqs.flatMap((f) => [f.q, f.a]),
+  ].join(" \n ");
+
+  it("does not claim the calculator includes overtime or holiday stacking", () => {
+    expect(allText).not.toMatch(/included when computing overtime premiums/i);
+    expect(c.formula.summary).toMatch(/ordinary day/i);
+  });
+
+  it("explains that overtime and day-type premiums require a higher applicable rate", () => {
+    expect(allText).toMatch(/does not model overtime/i);
+    expect(allText).toMatch(/applies to that day's applicable hourly rate/i);
+  });
+
+  it("explains that night differential is excluded from the 13th month base", () => {
+    expect(allText).toMatch(/13th month pay is based on basic salary only/i);
+    expect(allText).toMatch(/excluded from the 13th month base/i);
+  });
+});
+
 describe("13th month school-year payment wording", () => {
   const c = CONTENT["13th-month-pay"];
 
@@ -188,6 +215,15 @@ describe("search metadata stays truthful", () => {
     const text = [discount.summary, discount.description, ...discount.keywords].join(" ").toLowerCase();
     expect(text).toContain("percentage");
     expect(CONTENT["discount"].intro.join(" ")).toMatch(/generic percentage discount/i);
+  });
+
+  it("does not claim the discount calculator implements senior/PWD VAT rules", () => {
+    const discount = CALCULATORS.find((m) => m.slug === "discount")!;
+    expect(discount.description).not.toMatch(
+      /including the 20% senior citizen and PWD discount/i,
+    );
+    expect(discount.description).toMatch(/does not model/i);
+    expect(discount.description).toMatch(/VAT/i);
   });
 });
 

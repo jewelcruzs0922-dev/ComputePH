@@ -137,7 +137,7 @@ export const CONTENT: Record<string, CalculatorContent> = {
   "night-differential": {
     intro: [
       "Night shift differential (NSD) is the additional 10% premium Filipino employees receive for every hour worked between 10:00 PM and 6:00 AM, under Article 86 of the Labor Code.",
-      "Use this calculator to find out how much you earn for your night hours, based on your hourly, daily, or monthly rate.",
+      "Use this calculator to estimate the ordinary-day night premium for your night hours, based on your hourly, daily, or monthly rate.",
     ],
     howItWorks: [
       "Establish your regular hourly rate. Daily rate ÷ 8 gives it directly; monthly salary ÷ working hours per month gives an approximation.",
@@ -146,11 +146,13 @@ export const CONTENT: Record<string, CalculatorContent> = {
       "The result is additional pay — on top of your normal wage for those hours.",
     ],
     formula: {
-      summary: "Night differential = hourly rate × 10% × night hours worked",
+      summary:
+        "Night differential (ordinary day) = hourly rate × 10% × night hours worked",
       lines: [
         "Hourly rate = daily rate ÷ 8",
         "NSD per hour = hourly rate × 0.10",
         "Total NSD = NSD per hour × hours worked between 10 PM and 6 AM",
+        "For overtime, rest days and holidays, the 10% applies to that day's applicable hourly rate instead",
       ],
     },
     example: {
@@ -165,11 +167,11 @@ export const CONTENT: Record<string, CalculatorContent> = {
       answer: "Angel earns ₱64 in night differential for that shift.",
     },
     notes: [
-      "This is a standard estimate under the Labor Code — your actual night differential depends on your employment agreement, company policy, or collective bargaining terms.",
-      "The premium applies to every hour worked in the 10 PM–6 AM window — including overtime hours, where both premiums stack.",
-      "Night differential is part of your wages and is included when computing overtime premiums and (for most employees) 13th month pay is calculated on basic salary only.",
-      "Actual shift schedules vary; only hours truly worked inside the window count.",
-      "Employees required to work night shifts on rest days or holidays receive the night differential on top of those day-type premiums.",
+      "This calculator estimates night differential for an ordinary working day using your regular hourly rate. If the night hours are overtime or fall on a rest day, special day, or regular holiday, the 10% premium applies to that day's applicable hourly rate and the premiums multiply.",
+      "This tool does not model overtime, rest-day, or holiday premiums. Use the overtime calculator for the day-type premium, then add the night differential separately using the correct applicable rate.",
+      "Night differential is part of your wages, but 13th month pay is based on basic salary only. Night differential is therefore excluded from the 13th month base.",
+      "Actual shift schedules vary; only hours truly worked inside the 10 PM–6 AM window count.",
+      "Your actual night differential depends on your employment agreement, company policy, or collective bargaining terms.",
     ],
     faqs: [
       {
@@ -182,7 +184,7 @@ export const CONTENT: Record<string, CalculatorContent> = {
       },
       {
         q: "Does night differential count as overtime?",
-        a: "No. They are separate premiums. If your night hours are also overtime hours (beyond 8 hours that day), you are entitled to both.",
+        a: "No. They are separate premiums. If your night hours are also overtime hours (beyond 8 hours that day), both apply. For night overtime, the 10% night differential is applied to the applicable overtime rate for those hours; this calculator only estimates ordinary-day base-rate night differential.",
       },
       {
         q: "Is night differential taxable?",

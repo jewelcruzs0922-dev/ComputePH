@@ -79,6 +79,8 @@ export const CALCULATORS: CalculatorMeta[] = [
       "thirteenth month pay",
       "13th month pay computation",
       "13th month prorate",
+      "magkano 13th month",
+      "trece month sahod",
     ],
     popular: true,
     usesRules: true,
@@ -117,7 +119,7 @@ export const CALCULATORS: CalculatorMeta[] = [
     summary:
       "Compute the 10% night shift premium for work between 10 PM and 6 AM.",
     description:
-      "Free night differential calculator for the Philippines. Estimate the 10% night shift premium earned for hours worked between 10:00 PM and 6:00 AM.",
+      "Free night differential calculator for the Philippines. Estimate the ordinary-day 10% night shift premium for hours worked between 10:00 PM and 6:00 AM.",
     keywords: [
       "night differential",
       "night shift premium",
@@ -149,6 +151,10 @@ export const CALCULATORS: CalculatorMeta[] = [
       "hourly salary calculator",
       "daily rate calculator",
       "monthly to hourly",
+      "sahod",
+      "sweldo",
+      "magkano sahod",
+      "magkano sweldo",
     ],
     related: ["sss", "philhealth", "pag-ibig"],
   },
@@ -231,6 +237,9 @@ export const CALCULATORS: CalculatorMeta[] = [
       "withholding tax calculator",
       "monthly tax deduction",
       "tax table philippines",
+      "bawas sa sahod",
+      "tax sa sahod",
+      "magkano tax",
     ],
     popular: true,
     usesRules: true,
@@ -281,7 +290,7 @@ export const CALCULATORS: CalculatorMeta[] = [
     summary:
       "Find the sale price and savings from any percentage discount.",
     description:
-      "Free discount calculator for the Philippines. Compute the final price and savings from any percentage discount, including the 20% senior citizen and PWD discount.",
+      "Free discount calculator for the Philippines. Compute the final price and savings from any percentage discount; eligible senior citizen and PWD purchases may also require VAT-exemption rules that this tool does not model.",
     keywords: [
       "discount calculator",
       "sale price calculator",

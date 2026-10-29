@@ -13,7 +13,7 @@ export default function FaqSection({
       <div className="mt-4 divide-y divide-line overflow-hidden rounded-xl border border-line bg-white">
         {faqs.map((faq) => (
           <details key={faq.q} className="group px-4 py-3.5 sm:px-5">
-            <summary className="flex cursor-pointer list-none items-start justify-between gap-4 text-base font-medium text-navy marker:hidden [&::-webkit-details-marker]:hidden">
+            <summary className="flex cursor-pointer list-none items-start justify-between gap-4 text-base font-medium text-navy marker:hidden max-lg:min-h-11 [&::-webkit-details-marker]:hidden">
               {faq.q}
               <span
                 aria-hidden="true"

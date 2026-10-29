@@ -32,20 +32,21 @@ describe("security headers", () => {
     expect(csp).toContain("font-src 'self'");
     // Test runs without NODE_ENV=development: production must never allow eval.
     expect(csp).not.toContain("unsafe-eval");
-    // The only external origins allowed are Microsoft Clarity's; any other
-    // third-party origin in the CSP fails this test.
-    const clarityOrigins = new Set([
+    // Only the approved third-party origins may appear in the CSP.
+    const allowedOrigins = new Set([
       "https://www.clarity.ms",
       "https://scripts.clarity.ms",
       "https://*.clarity.ms",
       "https://c.bing.com",
+      "https://api.web3forms.com",
     ]);
     for (const origin of csp.match(/https?:\/\/[^\s;]+/g) ?? []) {
-      expect(clarityOrigins.has(origin), `unexpected CSP origin: ${origin}`).toBe(
+      expect(allowedOrigins.has(origin), `unexpected CSP origin: ${origin}`).toBe(
         true,
       );
     }
     expect(csp).toContain("https://www.clarity.ms");
+    expect(csp).toContain("https://api.web3forms.com");
   });
 
   it("sets the standard hardening headers", async () => {
@@ -96,6 +97,14 @@ describe("search safety", () => {
 
   it("still finds calculators for normal queries", () => {
     expect(searchCalculators("sss contribution").length).toBeGreaterThan(0);
+  });
+
+  it("supports common Filipino salary queries", () => {
+    expect(searchCalculators("sahod").some((c) => c.slug === "daily-hourly-salary")).toBe(
+      true,
+    );
+    expect(searchCalculators("magkano").length).toBeGreaterThan(0);
+    expect(searchCalculators("sweldo").length).toBeGreaterThan(0);
   });
 });
 

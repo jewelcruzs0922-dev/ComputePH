@@ -26,7 +26,7 @@ These are screenshots of the running site, not mockups.
 - Next.js 16 (App Router, Turbopack, every page prerendered at build)
 - React 19 + TypeScript (strict)
 - Tailwind CSS v4
-- Vitest for unit tests (274 tests)
+- Vitest for unit tests
 
 ## Commands
 

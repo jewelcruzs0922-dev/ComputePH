@@ -11,6 +11,7 @@ const isDev = process.env.NODE_ENV === "development";
 //   only third-party script (www.clarity.ms tag loader; stats POSTed to
 //   www.clarity.ms / *.clarity.ms; beacons from c.clarity.ms / c.bing.com; heatmap
 //   fonts as data: URLs — see https://learn.microsoft.com/clarity/setup-and-installation/clarity-csp).
+// - Web3Forms receives feedback JSON from the browser at api.web3forms.com.
 // - 'unsafe-eval' only in development (React debugging); production stays strict.
 const contentSecurityPolicy = [
   "default-src 'self'",
@@ -18,7 +19,7 @@ const contentSecurityPolicy = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' blob: data: https://*.clarity.ms https://c.bing.com",
   "font-src 'self' data:",
-  "connect-src 'self' https://www.clarity.ms https://*.clarity.ms https://c.bing.com",
+  "connect-src 'self' https://www.clarity.ms https://*.clarity.ms https://c.bing.com https://api.web3forms.com",
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",

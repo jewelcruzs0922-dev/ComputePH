@@ -41,7 +41,7 @@ export default function SourceNotice({
               href={source.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium text-royal-strong underline underline-offset-4 hover:text-navy"
+              className="font-medium text-royal-strong underline underline-offset-4 hover:text-navy max-lg:inline-block max-lg:py-2.5"
             >
               {source.label}
             </a>

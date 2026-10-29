@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { CALCULATORS } from "@/lib/registry";
+import { CALCULATORS, CATEGORIES } from "@/lib/registry";
 import { RULES_BY_SLUG } from "@/lib/rules";
 import { SITE_URL } from "@/lib/site";
 
@@ -12,8 +12,8 @@ import { SITE_URL } from "@/lib/site";
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      // No trailing slash — matches the homepage canonical (metadataBase origin).
-      url: SITE_URL,
+      // Match the homepage canonical URL, which resolves to the trailing slash.
+      url: `${SITE_URL}/`,
       changeFrequency: "weekly",
       priority: 1,
     },
@@ -37,6 +37,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly",
       priority: 0.3,
     },
+    ...CATEGORIES.map((c) => ({
+      url: `${SITE_URL}/calculators/${c.anchor}`,
+      changeFrequency: "weekly" as const,
+      priority: 0.85,
+    })),
     ...CALCULATORS.map((c) => {
       const rules = RULES_BY_SLUG[c.slug];
       return {

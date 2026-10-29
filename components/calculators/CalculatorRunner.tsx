@@ -45,8 +45,11 @@ function requestEngine(slug: string): Promise<CalculatorEngine> {
     ? load()
     : Promise.reject(new Error(`No calculator engine for "${slug}"`));
   // Keep an unknown slug from surfacing as an unhandled rejection before a
-  // caller attaches its handler.
-  request.catch(() => undefined);
+  // caller attaches its handler. Drop failed requests so a later attempt can
+  // retry instead of reusing the rejected promise for the whole session.
+  request.catch(() => {
+    if (engineRequests.get(slug) === request) engineRequests.delete(slug);
+  });
   engineRequests.set(slug, request);
   return request;
 }

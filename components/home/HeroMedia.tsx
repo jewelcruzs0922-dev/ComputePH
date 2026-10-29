@@ -5,18 +5,18 @@ import { useEffect, useRef, useState } from "react";
 
 const SLIDES = [
   {
-    src: "/images/hero-skyline.jpg",
-    alt: "High-rise city skyline at dusk reflected on the water",
+    src: "/images/hero-salary-professional.jpg",
+    alt: "Professional reviewing notes beside a laptop in a bright modern office",
     label: "Work and salary",
   },
   {
-    src: "/images/hero-malacanang.jpg",
-    alt: "The Malacañang New Executive Building facade in Manila",
+    src: "/images/hero-government-building.jpg",
+    alt: "Modern Philippine government service building with the national flag",
     label: "Government and contributions",
   },
   {
-    src: "/images/hero-peso.jpg",
-    alt: "Philippine peso banknotes and coins",
+    src: "/images/hero-money-peso-desk.jpg",
+    alt: "Philippine peso banknotes, coins, and a calculator on a light desk",
     label: "Money",
   },
 ];
@@ -28,10 +28,12 @@ export default function HeroMedia({
   className = "relative",
   sizes,
   priority = false,
+  decorative = false,
 }: {
   className?: string;
   sizes?: string;
   priority?: boolean;
+  decorative?: boolean;
 }) {
   const [active, setActive] = useState(0);
   // Only the visible slide ships in the initial HTML; the upcoming slide is
@@ -63,13 +65,16 @@ export default function HeroMedia({
   }, []);
 
   return (
-    <div className={`overflow-hidden ${className}`}>
+    <div
+      className={`overflow-hidden ${className}`}
+      aria-hidden={decorative || undefined}
+    >
       {SLIDES.map((slide, i) =>
         mounted.includes(i) ? (
           <Image
             key={slide.src}
             src={slide.src}
-            alt={slide.alt}
+            alt={decorative ? "" : slide.alt}
             fill
             quality={88}
             priority={priority && i === 0}

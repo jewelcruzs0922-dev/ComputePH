@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
+import { socialMetadata } from "@/lib/metadata";
+
+const TITLE = "Terms of Service";
+const DESCRIPTION =
+  "Terms of service for ComputePH: free calculators provided as-is for general information, not professional or official advice.";
 
 export const metadata: Metadata = {
-  title: "Terms of Service",
-  description:
-    "Terms of service for ComputePH: free calculators provided as-is for general information, not professional or official advice.",
+  title: TITLE,
+  description: DESCRIPTION,
   alternates: { canonical: "/terms" },
+  ...socialMetadata({ title: TITLE, description: DESCRIPTION, path: "/terms" }),
 };
 
 export default function TermsPage() {

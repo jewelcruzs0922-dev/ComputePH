@@ -1,52 +1,101 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import CalculatorIndex from "@/components/calculators/CalculatorIndex";
+import CategoryCard from "@/components/ui/CategoryCard";
 import Container from "@/components/ui/Container";
-import { CALCULATORS } from "@/lib/registry";
+import { CATEGORIES } from "@/lib/registry";
+import { SITE_NAME, SITE_URL } from "@/lib/site";
+import { socialMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = {
-  title: "All Calculators",
+  title: "Calculator Categories",
   description:
-    "Browse every free ComputePH calculator — salary, overtime, 13th month pay, SSS, PhilHealth, Pag-IBIG, income tax, loans, interest, discounts, and installments.",
+    "Browse ComputePH calculator categories for work and salary, government contributions, and money.",
   alternates: { canonical: "/calculators" },
+  ...socialMetadata({
+    title: "Calculator Categories",
+    description:
+      "Browse ComputePH calculator categories for work and salary, government contributions, and money.",
+    path: "/calculators",
+  }),
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: `${SITE_NAME} calculator categories`,
+  url: `${SITE_URL}/calculators`,
+  mainEntity: {
+    "@type": "ItemList",
+    itemListElement: CATEGORIES.map((category, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: category.name,
+      url: `${SITE_URL}/calculators/${category.anchor}`,
+    })),
+  },
 };
 
 export default function CalculatorsPage() {
-  const items = CALCULATORS.map((c) => ({
-    slug: c.slug,
-    name: c.name,
-    summary: c.summary,
-    category: c.category,
-    usesRules: c.usesRules,
-  }));
-
   return (
     <Container className="pt-6 pb-10 sm:py-14">
-      <div className="relative">
-        <Image
-          src="/images/calc-hero.png"
-          alt=""
-          aria-hidden="true"
-          width={1406}
-          height={1119}
-          priority
-          sizes="(min-width: 1600px) 500px, 30vw"
-          className="pointer-events-none absolute right-14 top-0 hidden w-[30%] max-w-[500px] select-none lg:block xl:w-[35%]"
-        />
-
-        <h1 className="mt-1.5 text-3xl font-bold leading-[1.1] tracking-tight text-navy sm:mt-3 sm:text-4xl sm:leading-[1.15] md:text-5xl xl:pl-10 xl:text-[3.4rem] 2xl:text-6xl">
-          <span className="block text-brand">Find the Right Calculator</span>
-          <span className="block text-royal-strong">for Your Needs</span>
-        </h1>
-
-        <p className="mt-3 max-w-[34rem] text-base leading-6 text-ink-muted sm:mt-4 sm:text-xl sm:leading-8 xl:pl-10">
-          From salary and government contributions to loans, discounts, and
-          more — ComputePH has you covered.
-        </p>
-
-        <div className="mt-6 sm:mt-8">
-          <CalculatorIndex items={items} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
+      <section className="grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="relative min-h-[360px] min-w-0 overflow-hidden rounded-[2rem] sm:min-h-[440px] lg:min-h-[560px]">
+          <Image
+            src="/images/calculators-hero-money.jpg"
+            alt="Hands counting stacks of Philippine peso banknotes"
+            fill
+            priority
+            sizes="(min-width: 1024px) 45vw, 100vw"
+            className="object-cover"
+          />
         </div>
+
+        <div className="flex min-w-0 flex-col justify-center rounded-[2rem] bg-brand px-6 py-12 sm:px-10 sm:py-14 lg:px-14 lg:py-16">
+          <h1
+            aria-label="Find the Right Calculator for Your Needs"
+            className="max-w-2xl text-4xl font-bold leading-[1.05] tracking-tight text-navy sm:text-6xl lg:text-[4.5rem]"
+          >
+            Find the <span>Right Calculator</span> for Your Needs
+          </h1>
+          <p className="mt-6 max-w-xl text-lg leading-8 text-navy/55 sm:text-xl sm:leading-9">
+            Choose a category to see only the calculators that belong to it.
+            Start with work and salary, government contributions, or money.
+          </p>
+        </div>
+      </section>
+
+      <h2 className="mt-16 mb-8 text-center text-4xl font-bold tracking-tight text-navy sm:mt-24 sm:text-5xl lg:mt-32">
+        Browse by Category
+      </h2>
+
+      <div className="grid gap-12 lg:mx-auto lg:w-[72%]">
+        {CATEGORIES.map((category, index) =>
+          category.id === "government" ? (
+            <div
+              key={category.id}
+              className="relative isolate py-8 before:absolute before:inset-x-[-1rem] before:-inset-y-6 before:-z-10 before:bg-[#edf4fc] sm:before:inset-x-[-1.5rem] lg:before:left-1/2 lg:before:right-auto lg:before:w-screen lg:before:-translate-x-1/2"
+            >
+              <CategoryCard
+                category={category}
+                iconAbove
+                number={String(index + 1).padStart(2, "0")}
+              />
+            </div>
+          ) : (
+            <CategoryCard
+              key={category.id}
+              category={category}
+              iconAbove
+              number={String(index + 1).padStart(2, "0")}
+            />
+          ),
+        )}
       </div>
     </Container>
   );

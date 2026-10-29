@@ -1,6 +1,6 @@
 import type { CalcOutcome, FieldDef, FieldValues, ResultLine } from "@/lib/types";
 import { formatNumber, formatPeso } from "@/lib/utils/money";
-import { computeSss, RULES_SSS, SSS_MPF_THRESHOLD } from "@/lib/rules/sss";
+import { computeSss, RULES_SSS, SSS_EMPLOYEE_RATE, SSS_MPF_THRESHOLD, SSS_RATE } from "@/lib/rules/sss";
 
 export const fields: FieldDef[] = [
   {
@@ -77,10 +77,12 @@ export function calculate(values: FieldValues): CalcOutcome {
   ];
 
   if (result.mpfPortion > 0) {
+    const mpfContribution = result.mpfPortion * SSS_RATE;
+    const mpfEmployeeShare = result.mpfPortion * SSS_EMPLOYEE_RATE;
     lines.push({
-      label: "MSC portion credited to MPF",
+      label: "MPF salary-credit portion (base)",
       value: formatPeso(result.mpfPortion),
-      hint: `The part of your MSC above ₱${formatNumber(SSS_MPF_THRESHOLD, 0)} — not an extra deduction. The same 15% rate (5% you, 10% employer) on this portion goes to the MySSS Pension Booster.`,
+      hint: `Base amount above ₱${formatNumber(SSS_MPF_THRESHOLD, 0)}, not the contribution itself. At 15%, the combined MPF contribution is ${formatPeso(mpfContribution)} (${formatPeso(mpfEmployeeShare)} employee + ${formatPeso(mpfContribution - mpfEmployeeShare)} employer).`,
     });
   }
 

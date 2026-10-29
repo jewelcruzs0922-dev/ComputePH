@@ -1,13 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
-import NewsletterNote from "@/components/layout/NewsletterNote";
 import { SITE_NAME } from "@/lib/site";
 import { CATEGORIES } from "@/lib/registry";
+import AnalyticsSettingsButton from "@/components/analytics/AnalyticsSettingsButton";
 
 const QUICK_LINKS = [
   { href: "/calculators", label: "Calculators" },
   ...CATEGORIES.map((c) => ({
-    href: `/calculators#${c.anchor}`,
+    href: `/calculators/${c.anchor}`,
     label:
       c.id === "government"
         ? "Government"
@@ -59,7 +59,7 @@ export default function SiteFooter() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-[0.8125rem] text-azure transition-colors hover:text-white hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+                    className="text-[0.8125rem] text-azure transition-colors hover:text-white hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand max-lg:inline-flex max-lg:min-h-11 max-lg:items-center"
                   >
                     {link.label}
                   </Link>
@@ -75,12 +75,15 @@ export default function SiteFooter() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-[0.8125rem] text-azure transition-colors hover:text-white hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+                    className="text-[0.8125rem] text-azure transition-colors hover:text-white hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand max-lg:inline-flex max-lg:min-h-11 max-lg:items-center"
                   >
                     {link.label}
                   </Link>
                 </li>
               ))}
+              <li>
+                <AnalyticsSettingsButton />
+              </li>
             </ul>
           </nav>
 
@@ -90,7 +93,23 @@ export default function SiteFooter() {
               Useful tools, updates, and more for everyday life in the
               Philippines.
             </p>
-            <NewsletterNote />
+            <div className="mt-4 flex flex-wrap gap-2.5">
+              <Link
+                href="/#newsletter"
+                className="inline-flex min-h-11 items-center rounded-full border border-white/20 bg-white/5 px-3.5 text-xs font-semibold text-azure transition-colors hover:border-brand/70 hover:bg-brand hover:text-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+              >
+                Money Brief newsletter
+              </Link>
+              <Link
+                href="/#feedback"
+                className="inline-flex min-h-11 items-center rounded-full border border-white/20 bg-white/5 px-3.5 text-xs font-semibold text-azure transition-colors hover:border-brand/70 hover:bg-brand hover:text-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+              >
+                Send feedback
+              </Link>
+            </div>
+            <p className="mt-3 text-xs leading-5 text-azure/80">
+              Twice a month. Unsubscribe anytime.
+            </p>
           </div>
         </div>
 

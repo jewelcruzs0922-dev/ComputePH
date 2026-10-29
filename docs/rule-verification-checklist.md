@@ -8,7 +8,7 @@ the official source. When a rule changes, update the rule module, the content,
 and the tests together — then update `lastUpdated` in the rule module to the
 date of the actual verification.
 
-Last formal audit: 2026-10-04 — see `COMPUTEPH-RULES-VERIFICATION-AUDIT-2026-10-04.md`.
+Last formal audit: 2026-10-28 (local audit package; intentionally not committed).
 
 ---
 

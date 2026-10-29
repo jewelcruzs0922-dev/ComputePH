@@ -23,9 +23,14 @@ describe("SSS contribution (schedule eff. Jan 1, 2025)", () => {
     expect(valueOf(lines, "Employer share")).toBe("₱2,500.00");
     expect(valueOf(lines, "Employers' Compensation (EC)")).toBe("₱30.00");
     expect(valueOf(lines, "Total remitted to SSS")).toBe("₱3,780.00");
-    expect(valueOf(lines, "MSC portion credited to MPF")).toBe(
+    expect(valueOf(lines, "MPF salary-credit portion (base)")).toBe(
       "₱5,000.00",
     );
+    const mpfLine = lines.find(
+      (line) => line.label === "MPF salary-credit portion (base)",
+    );
+    expect(mpfLine?.hint).toContain("₱750.00");
+    expect(mpfLine?.hint).toContain("₱250.00");
   });
 
   it("rounds salary up to the nearest ₱500 bracket", () => {
@@ -59,7 +64,7 @@ describe("SSS contribution (schedule eff. Jan 1, 2025)", () => {
     expect(valueOf(lines, "Monthly Salary Credit (MSC)")).toBe("₱35,000.00");
     expect(emphasisValue(lines)).toBe("₱1,750.00");
     expect(valueOf(lines, "Total remitted to SSS")).toBe("₱5,280.00");
-    expect(valueOf(lines, "MSC portion credited to MPF")).toBe(
+    expect(valueOf(lines, "MPF salary-credit portion (base)")).toBe(
       "₱15,000.00",
     );
   });
@@ -134,7 +139,7 @@ describe("SSS contribution (schedule eff. Jan 1, 2025)", () => {
     );
     expect(valueOf(lines, "Monthly Salary Credit (MSC)")).toBe("₱34,500.00");
     expect(emphasisValue(lines)).toBe("₱1,725.00");
-    expect(valueOf(lines, "MSC portion credited to MPF")).toBe(
+    expect(valueOf(lines, "MPF salary-credit portion (base)")).toBe(
       "₱14,500.00",
     );
   });
@@ -146,7 +151,7 @@ describe("SSS contribution (schedule eff. Jan 1, 2025)", () => {
     expect(valueOf(lines, "Monthly Salary Credit (MSC)")).toBe("₱35,000.00");
     expect(emphasisValue(lines)).toBe("₱1,750.00");
     expect(valueOf(lines, "Total remitted to SSS")).toBe("₱5,280.00");
-    expect(valueOf(lines, "MSC portion credited to MPF")).toBe(
+    expect(valueOf(lines, "MPF salary-credit portion (base)")).toBe(
       "₱15,000.00",
     );
   });
@@ -158,7 +163,7 @@ describe("SSS contribution (schedule eff. Jan 1, 2025)", () => {
     expect(valueOf(lines, "Monthly Salary Credit (MSC)")).toBe("₱20,000.00");
     expect(emphasisValue(lines)).toBe("₱1,000.00");
     expect(
-      lines.some((line) => line.label.startsWith("MSC portion credited to MPF")),
+      lines.some((line) => line.label.startsWith("MPF salary-credit portion (base)")),
     ).toBe(false);
   });
 
@@ -168,7 +173,7 @@ describe("SSS contribution (schedule eff. Jan 1, 2025)", () => {
     );
     expect(valueOf(lines, "Monthly Salary Credit (MSC)")).toBe("₱20,500.00");
     expect(emphasisValue(lines)).toBe("₱1,025.00");
-    expect(valueOf(lines, "MSC portion credited to MPF")).toBe(
+    expect(valueOf(lines, "MPF salary-credit portion (base)")).toBe(
       "₱500.00",
     );
   });
